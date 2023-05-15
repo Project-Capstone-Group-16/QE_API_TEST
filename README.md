@@ -1,2 +1,2 @@
-# QE_WEB_UI_TEST
-web UI testing capstone project kel 16
+# QE_API_TEST
+API testing capstone project kel 16
