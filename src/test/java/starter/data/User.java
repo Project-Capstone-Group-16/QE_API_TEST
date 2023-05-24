@@ -1,8 +1,8 @@
 package starter.data;
 
 public class User {
-    String email = "arulbeka25@gmail.com";
-    String password = "25april2002";
+    String email = "2006147@itg.ac.id";
+    String password = "test123";
     String registPassword = "testqe123";
 //    String fullname;
 //    String token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJGdWxsbmFtZSI6IkFydWwgQnVkaSBLYWxpbWF0IiwiRW1haWwiOiJhcnVsYmVrYTI1QGdtYWlsLmNvbSJ9.NtJJUFo0ssUYUjmWU188jec4qco6BB39qatQyDTmrE8";
@@ -23,13 +23,13 @@ public class User {
     public void setRegistPassword(String registPassword) {
         this.registPassword = registPassword;
     }
-    public String getToken() {
-        return token;
-    }
+//    public String getToken() {
+//        return token;
+//    }
 
-    public void setToken(String token) {
-        this.token = token;
-    }
+//    public void setToken(String token) {
+//        this.token = token;
+//    }
 
 
     public String getEmail() {
