@@ -2,6 +2,7 @@ package starter.stepdefinitions;
 
 import com.github.javafaker.Faker;
 import io.cucumber.datatable.DataTable;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 //import io.cucumber.java.en.And;
@@ -12,6 +13,7 @@ import net.serenitybdd.screenplay.rest.abilities.CallAnApi;
 import net.serenitybdd.screenplay.rest.interactions.*;
 //import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import starter.data.Admin;
 import starter.data.User;
 
 //import java.util.ArrayList;
@@ -28,6 +30,7 @@ public class APIStepDefinitions {
     String baseURL = "http://3.25.202.31:8080";
 
     User user = new User();
+    Admin admin = new Admin();
 
     @Given("{actor} call an api {string} with method {string} with payload below")
     public void callApi(Actor actor, String path, String method, DataTable table) {
@@ -58,11 +61,35 @@ public class APIStepDefinitions {
                     String randomEmail = faker.internet().emailAddress();
                     bodyRequest.put(key, randomEmail);
                     user.setEmail(randomEmail);
+                    admin.setAdminEmail(randomEmail);
                 }
+                case "randomPassword" -> {
+                    String randomPassword = faker.internet().password();
+                    bodyRequest.put(key, randomPassword);
+                    user.setPassword(randomPassword);
+                    admin.setAdminPassword(randomPassword);
+                }
+                case "nameInventron" -> {
+                    String nameInventron = faker.address().city();
+                    bodyRequest.put(key, "Inventron " + nameInventron);
+                    admin.setLocation(nameInventron);
+                }
+                case "linkImage" -> {
+                    String linkImage = "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/BMW_logo_%28gray%29.svg/2048px-BMW_logo_%28gray%29.svg.png";
+                    bodyRequest.put(key, linkImage);
+                }
+                case "randomFullname" -> {
+                    String randomFullname = faker.name().fullName();
+                    bodyRequest.put(key, randomFullname);
+                }
+
 
                 case "userEmail" -> bodyRequest.put(key, user.getEmail());
                 case "userPassword" -> bodyRequest.put(key, user.getPassword());
-                case "registPassword" -> bodyRequest.put(key, user.getRegistPassword());
+                case "adminEmail" -> bodyRequest.put(key, admin.getAdminEmail());
+                case "adminPassword" -> bodyRequest.put(key, admin.getAdminPassword());
+                case "confirmPassword" -> bodyRequest.put(key, user.getPassword());
+                case "locationInventron" -> bodyRequest.put(key, admin.getLocation());
 //                case "userOtp" -> bodyRequest.put(key, user.getOtp());
                 default -> bodyRequest.put(key, valueList.get(key));
             }
@@ -162,6 +189,12 @@ public class APIStepDefinitions {
     public void userVerifyStatusCodeIs(Actor actor, int statusCode) {
         Response response = SerenityRest.lastResponse();
         response.then().statusCode(statusCode).log().all();
+    }
+
+    @And("{actor} get auth token")
+    public void adminGetAuthToken(Actor actor) {
+        Response response = SerenityRest.lastResponse();
+        user.setToken(response.path("token"));
     }
 
 //    @And("{actor} get auth token")
