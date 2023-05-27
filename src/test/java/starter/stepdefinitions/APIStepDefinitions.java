@@ -2,9 +2,12 @@ package starter.stepdefinitions;
 
 import com.github.javafaker.Faker;
 import io.cucumber.datatable.DataTable;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 //import io.cucumber.java.en.And;
+import io.restassured.RestAssured;
+import io.restassured.internal.common.assertion.Assertion;
 import io.restassured.response.Response;
 import net.serenitybdd.rest.SerenityRest;
 import net.serenitybdd.screenplay.Actor;
@@ -12,9 +15,11 @@ import net.serenitybdd.screenplay.rest.abilities.CallAnApi;
 import net.serenitybdd.screenplay.rest.interactions.*;
 //import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import starter.data.Admin;
 import starter.data.User;
 
 //import java.util.ArrayList;
+import java.io.File;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -25,9 +30,10 @@ import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInC
 
 public class APIStepDefinitions {
 
-    String baseURL = "http://3.25.202.31:8080";
+    String baseURL = "http://13.55.207.170:8080";
 
     User user = new User();
+    Admin admin = new Admin();
 
     @Given("{actor} call an api {string} with method {string} with payload below")
     public void callApi(Actor actor, String path, String method, DataTable table) {
@@ -58,10 +64,23 @@ public class APIStepDefinitions {
                     String randomEmail = faker.internet().emailAddress();
                     bodyRequest.put(key, randomEmail);
                     user.setEmail(randomEmail);
+                    admin.setAdminEmail(randomEmail);
+                }
+                case "randomPassword" -> {
+                    String randomPassword = faker.internet().password();
+                    bodyRequest.put(key, randomPassword);
+                    admin.setAdminPassword(randomPassword);
+                }
+                case "randomFullname" -> {
+                    String randomFullname = faker.name().fullName();
+                    bodyRequest.put(key, randomFullname);
+                    admin.setAdminPassword(randomFullname);
                 }
 
                 case "userEmail" -> bodyRequest.put(key, user.getEmail());
+                case "adminEmail" -> bodyRequest.put(key, admin.getAdminEmail());
                 case "userPassword" -> bodyRequest.put(key, user.getPassword());
+                case "adminPassword" -> bodyRequest.put(key, admin.getAdminPassword());
                 case "registPassword" -> bodyRequest.put(key, user.getRegistPassword());
 //                case "userOtp" -> bodyRequest.put(key, user.getOtp());
                 default -> bodyRequest.put(key, valueList.get(key));
@@ -162,6 +181,43 @@ public class APIStepDefinitions {
     public void userVerifyStatusCodeIs(Actor actor, int statusCode) {
         Response response = SerenityRest.lastResponse();
         response.then().statusCode(statusCode).log().all();
+    }
+
+    @Then("{actor} get auth token")
+    public void adminGetAuth(Actor actor) {
+        Response response = SerenityRest.lastResponse();
+        admin.setToken(response.path("token"));
+    }
+
+    @Given("{actor} call api {string} with method {string}")
+    public void userCallApiWithMethod(Actor actor, String path, String method) {
+        actor.whoCan(CallAnApi.at(baseURL));
+
+        switch (method) {
+            case "GET" ->
+                    actor.attemptsTo(Get.resource(path).with(request -> request.header("Authorization", "Bearer " + admin.getToken())));
+            case "POST" -> actor.attemptsTo(Post.to(path));
+            case "PUT" -> actor.attemptsTo(Put.to(path));
+            case "DELETE" -> actor.attemptsTo(Delete.from(path));
+            default -> throw new IllegalStateException("Unknown method");
+        }
+    }
+
+    @Given("{actor} create warehouse")
+    public void adminCreateWarehouse(Actor actor) {
+        Faker faker = new Faker(new Locale("in-ID"));
+        String nameWarehouse = "Inventron" + faker.address().city();
+        String location = faker.address().city();
+
+        File file = new File("C:/Users/My Windows/Pictures/After/DSC02390.jpg");
+
+        Response response = RestAssured
+                .given()
+                .multiPart("name", nameWarehouse, "multipart/form-data")
+                .multiPart("location", location, "multipart/form-data")
+                .multiPart("warehouse_image", file, "multipart/form-data")
+                .post("http://13.55.207.170:8080/admin/warehouse")
+                .thenReturn();
     }
 
 //    @And("{actor} get auth token")
