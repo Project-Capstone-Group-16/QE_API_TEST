@@ -58,11 +58,20 @@ public class APIStepDefinitions {
             //check if value correspond to random syntax
             switch (valueList.get(key)) {
 
+                case "randomUserEmail" -> {
+                    String randomEmail = faker.internet().emailAddress();
+                    bodyRequest.put(key, randomEmail);
+                    user.setUserEmail(randomEmail);
+                }
                 case "randomEmail" -> {
                     String randomEmail = faker.internet().emailAddress();
                     bodyRequest.put(key, randomEmail);
-                    user.setEmail(randomEmail);
                     admin.setAdminEmail(randomEmail);
+                }
+                case "randomUserPassword" -> {
+                    String randomPassword = faker.internet().password();
+                    bodyRequest.put(key, randomPassword);
+                    user.setUserPassword(randomPassword);
                 }
                 case "randomPassword" -> {
                     String randomPassword = faker.internet().password();
@@ -72,15 +81,12 @@ public class APIStepDefinitions {
                 case "randomFullname" -> {
                     String randomFullname = faker.name().fullName();
                     bodyRequest.put(key, randomFullname);
-                    admin.setAdminPassword(randomFullname);
                 }
 
-                case "userEmail" -> bodyRequest.put(key, user.getEmail());
+                case "userEmail" -> bodyRequest.put(key, user.getUserEmail());
                 case "adminEmail" -> bodyRequest.put(key, admin.getAdminEmail());
-                case "userPassword" -> bodyRequest.put(key, user.getPassword());
+                case "userPassword" -> bodyRequest.put(key, user.getUserPassword());
                 case "adminPassword" -> bodyRequest.put(key, admin.getAdminPassword());
-                case "registPassword" -> bodyRequest.put(key, user.getPassword());
-//                case "userOtp" -> bodyRequest.put(key, user.getOtp());
                 default -> bodyRequest.put(key, valueList.get(key));
             }
         }
@@ -90,13 +96,13 @@ public class APIStepDefinitions {
                 actor.attemptsTo(Get.resource(path));
                 break;
             case "POST":
-                actor.attemptsTo(Post.to(path).with(request -> request.body(bodyRequest)));
+                actor.attemptsTo(Post.to(path).with(request -> request.header("Authorization", "Bearer " + user.getAuth()).body(bodyRequest).log().all()));
                 break;
             case "PATCH":
                 actor.attemptsTo(Patch.to(path));
                 break;
             case "PUT":
-                actor.attemptsTo(Put.to(path));
+                actor.attemptsTo(Put.to(path).with(request -> request.header("Authorization", "Bearer " + user.getAuth()).body(bodyRequest).log().all()));
                 break;
             case "DELETE":
                 actor.attemptsTo(Delete.from(path));
@@ -131,43 +137,6 @@ public class APIStepDefinitions {
         }
     }
 
-//    @Given("{actor} generate some otp")
-//    public void userGenerateSomeOtp(Actor actor) {
-//        actor.whoCan(CallAnApi.at(baseURL));
-//
-//        JSONObject bodyRequest = new JSONObject();
-//
-//        bodyRequest.put("email", "arulbeka25@gmail.com");
-//
-//        actor.attemptsTo(Post.to("/forgot-password/generate")
-//                .with(request -> request.body(bodyRequest).log().all());
-//    }
-
-//    @Given("{actor} verify some otp")
-//    public void userVerifySomeOtp(Actor actor) {
-//        actor.whoCan(CallAnApi.at(baseURL));
-//
-//        JSONObject bodyRequest = new JSONObject();
-//
-//        bodyRequest.put("otp", "946189");
-//
-//        actor.attemptsTo(Post.to("/forgot-password/verify")
-//                .with(request -> request.body(bodyRequest).log().all());
-//    }
-
-//    @Given("{actor} update password account")
-//    public void userUpdatePasswordAccount(Actor actor) {
-//        actor.whoCan(CallAnApi.at(baseURL));
-//
-//        JSONObject bodyRequest = new JSONObject();
-//
-//        bodyRequest.put("password" , "subaruputra1313");
-//        bodyRequest.put("confirm_password" , "subaruputra1313");
-//
-//        actor.attemptsTo(Post.to("/forgot-password/verify")
-//                .with(request -> request.body(bodyRequest).log().all());
-//    }
-
 
     @Then("{actor} verify response is match with json schema {string}")
     public void userVerifyResponseIsMatchWithJsonSchema(Actor actor, String schema) {
@@ -182,10 +151,16 @@ public class APIStepDefinitions {
         response.then().statusCode(statusCode).log().all();
     }
 
-    @Then("{actor} get auth token")
+    @Then("{actor} admin get auth token")
     public void adminGetAuth(Actor actor) {
         Response response = SerenityRest.lastResponse();
         admin.setAuth(response.path("data.token"));
+    }
+
+    @Then("{actor} user get auth token")
+    public void userGetAuth(Actor actor) {
+        Response response = SerenityRest.lastResponse();
+        user.setAuth(response.path("data.token"));
     }
 
     @Given("{actor} call api {string} with method {string}")
