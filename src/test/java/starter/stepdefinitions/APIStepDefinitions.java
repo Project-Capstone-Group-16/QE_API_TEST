@@ -2,12 +2,10 @@ package starter.stepdefinitions;
 
 import com.github.javafaker.Faker;
 import io.cucumber.datatable.DataTable;
-import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 //import io.cucumber.java.en.And;
 import io.restassured.RestAssured;
-import io.restassured.internal.common.assertion.Assertion;
 import io.restassured.response.Response;
 import net.serenitybdd.rest.SerenityRest;
 import net.serenitybdd.screenplay.Actor;
@@ -30,7 +28,7 @@ import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInC
 
 public class APIStepDefinitions {
 
-    String baseURL = "http://13.55.207.170:8080";
+    String baseURL = "http://143.198.92.250:8080";
 
     User user = new User();
     Admin admin = new Admin();
@@ -81,7 +79,7 @@ public class APIStepDefinitions {
                 case "adminEmail" -> bodyRequest.put(key, admin.getAdminEmail());
                 case "userPassword" -> bodyRequest.put(key, user.getPassword());
                 case "adminPassword" -> bodyRequest.put(key, admin.getAdminPassword());
-                case "registPassword" -> bodyRequest.put(key, user.getRegistPassword());
+                case "registPassword" -> bodyRequest.put(key, user.getPassword());
 //                case "userOtp" -> bodyRequest.put(key, user.getOtp());
                 default -> bodyRequest.put(key, valueList.get(key));
             }
@@ -92,7 +90,7 @@ public class APIStepDefinitions {
                 actor.attemptsTo(Get.resource(path));
                 break;
             case "POST":
-                actor.attemptsTo(Post.to(path).with(request -> request.body(bodyRequest).log().all()));
+                actor.attemptsTo(Post.to(path).with(request -> request.body(bodyRequest)));
                 break;
             case "PATCH":
                 actor.attemptsTo(Patch.to(path));
@@ -175,6 +173,7 @@ public class APIStepDefinitions {
     public void userVerifyResponseIsMatchWithJsonSchema(Actor actor, String schema) {
         Response response = SerenityRest.lastResponse();
         response.then().body(matchesJsonSchemaInClasspath(schema));
+        System.out.println(admin.getAuth());
     }
 
     @Then("{actor} verify status code is {int}")
@@ -186,7 +185,7 @@ public class APIStepDefinitions {
     @Then("{actor} get auth token")
     public void adminGetAuth(Actor actor) {
         Response response = SerenityRest.lastResponse();
-        admin.setToken(response.path("token"));
+        admin.setAuth(response.path("data.token"));
     }
 
     @Given("{actor} call api {string} with method {string}")
@@ -195,16 +194,19 @@ public class APIStepDefinitions {
 
         switch (method) {
             case "GET" ->
-                    actor.attemptsTo(Get.resource(path).with(request -> request.header("Authorization", "Bearer " + admin.getToken())));
+                    actor.attemptsTo(Get.resource(path).with(request -> request.header("Authorization", "Bearer " + admin.getAuth())));
             case "POST" -> actor.attemptsTo(Post.to(path));
             case "PUT" -> actor.attemptsTo(Put.to(path));
-            case "DELETE" -> actor.attemptsTo(Delete.from(path));
+            case "DELETE" -> actor.attemptsTo(Delete.from(path).with(request -> request.header("Authorization", "Bearer " + admin.getAuth())));
             default -> throw new IllegalStateException("Unknown method");
         }
+        System.out.println(admin.getAuth());
     }
 
-    @Given("{actor} create warehouse")
-    public void adminCreateWarehouse(Actor actor) {
+    @Given("{actor} create warehouse {string}")
+    public void adminCreateWarehouse(Actor actor, String path) {
+        actor.whoCan(CallAnApi.at(baseURL));
+
         Faker faker = new Faker(new Locale("in-ID"));
         String nameWarehouse = "Inventron" + faker.address().city();
         String location = faker.address().city();
@@ -213,130 +215,15 @@ public class APIStepDefinitions {
 
         Response response = RestAssured
                 .given()
+//                .formParam("token", admin.getToken())
                 .multiPart("name", nameWarehouse, "multipart/form-data")
                 .multiPart("location", location, "multipart/form-data")
                 .multiPart("warehouse_image", file, "multipart/form-data")
-                .post("http://13.55.207.170:8080/admin/warehouse")
-                .thenReturn();
+                .when()
+                .post();
+
+        actor.attemptsTo(Post.to(path).with(request -> request.header("Authorization", "Bearer " + admin.getAuth()).body(response)));
+        System.out.println(admin.getAuth());
+
     }
-
-//    @And("{actor} get auth token")
-//    public void userGetAuthToken(Actor actor){
-//        Response response = SerenityRest.lastResponse();
-//        user.setToken(response.path("data"));
-//    }
-
-
-//METHOD YANG DIPAKE CUMAN DIATAS DOANG
-
-//METHOD DIBAWAH DUMMY DOANG YANG DIPAKE PAS CAPSTONE
-//
-//    @Then("{actor} verify {string} is exist")
-//    public void userVerifyIsExist(Actor actor, String data) {
-//        Response response = SerenityRest.lastResponse();
-//        response.then().body(data, not(emptyString()));
-//    }
-//
-//
-//
-//    @Given("{actor} get other users informations")
-//    public void getOtherUsersInformations(Actor actor) {
-//        actor.whoCan(CallAnApi.at(baseURL));
-//        actor.attemptsTo(Get.resource("/auth/info")
-//                .with(request -> request.header("Authorization", "Bearer "+user.getToken()).log().all()));
-//    }
-//
-//    @Given("{actor} is create a new product")
-//    public void userIsCreateANewProduct(Actor actor){
-//        Faker faker = new Faker(new Locale("in-ID"));
-//
-//        actor.whoCan(CallAnApi.at(baseURL));
-//
-//        JSONObject bodyRequest = new JSONObject();
-//
-//        List<Integer> listCategories = new ArrayList<>();
-//        listCategories.add(0, 8822);
-//        listCategories.add(1, 5938);
-//        listCategories.add(2, 5939);
-//
-//        bodyRequest.put("name", faker.commerce().productName());
-//        bodyRequest.put("description", faker.lorem().sentence());
-//        bodyRequest.put("price", 100);
-//        bodyRequest.put("categories", listCategories);
-//
-//        actor.attemptsTo(Post.to("/products").with(request -> request.header("Authorization", user.getToken()).body(bodyRequest).log().all()));
-//    }
-//
-//
-//    @Given("{actor} input a product rating")
-//    public void userInputAProductRating(Actor actor) {
-//        actor.whoCan(CallAnApi.at(baseURL));
-//
-//        JSONObject bodyRequest = new JSONObject();
-//
-//        bodyRequest.put("count", 5);
-//
-//        actor.attemptsTo(Post.to("/products/14340/ratings")
-//                .with(request -> request.header("Authorization", "Bearer "+user.getToken())
-//                        .body(bodyRequest).log().all()));
-//    }
-//
-//    @Given("{actor} create a comment on product")
-//    public void userCreateACommentOnProduct(Actor actor) {
-//        actor.whoCan(CallAnApi.at(baseURL));
-//
-//        JSONObject bodyRequest = new JSONObject();
-//
-//        bodyRequest.put("content", "ini testing dibuat sama arul budi kalimat 25 04 2002");
-//
-//        actor.attemptsTo(Post.to("/products/14340/comments")
-//                .with(request -> request.header("Authorization", "Bearer "+user.getToken())
-//                        .body(bodyRequest).log().all()));
-//    }
-//
-//    @Given("{actor} is create new category products")
-//    public void userIsCreateNewCategoryProducts(Actor actor) {
-//        actor.whoCan(CallAnApi.at(baseURL));
-//
-//        JSONObject bodyRequest = new JSONObject();
-//
-//        bodyRequest.put("name", "Peripheral Gaming");
-//        bodyRequest.put("description", "Mouse, Keyboard, Headphone ETC");
-//
-//        actor.attemptsTo(Post.to("/categories")
-//                .with(request -> request.header("Authorization", "Bearer "+user.getToken())
-//                        .body(bodyRequest).log().all()));
-//    }
-//
-//    @Given("{actor} create a new orders")
-//    public void userCreateOrders(Actor actor) {
-//        actor.whoCan(CallAnApi.at(baseURL));
-//
-//        JSONArray bodyRequest = new JSONArray();
-//        JSONObject order1 = new JSONObject();
-//        {
-//            order1.put("product_id", 14340);
-//            order1.put("quantity", 1);
-//            bodyRequest.add(order1);
-//
-//            actor.attemptsTo(Post.to("/orders")
-//                    .with(request -> request.header("Authorization", "Bearer " + user.getToken())
-//                            .body(bodyRequest).log().all()));
-//        }
-//    }
-//
-//    @Given("{actor} get all orders")
-//    public void userGetAllOrders (Actor actor) {
-//        actor.whoCan(CallAnApi.at(baseURL));
-//        actor.attemptsTo(Get.resource("/orders")
-//                .with(request -> request.header("Authorization", "Bearer "+user.getToken()).log().all()));
-//    }
-//
-//    @Given("{actor} get all orders by id")
-//    public void userGetAllOrdersById(Actor actor) {
-//        actor.whoCan(CallAnApi.at(baseURL));
-//        actor.attemptsTo(Get.resource("/orders/11014")
-//                .with(request -> request.header("Authorization", "Bearer "+user.getToken()).log().all()));
-//    }
-
 }
