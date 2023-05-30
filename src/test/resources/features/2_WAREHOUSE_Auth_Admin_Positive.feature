@@ -19,7 +19,7 @@ Feature: Authentication Admin Positive
       | email      | password      |
       | adminEmail | adminPassword |
     And Admin verify status code is 200
-    Then Admin get auth token
+    Then Admin admin get auth token
     Then Admin verify response is match with json schema "authlogin.json"
 
 #  @Inventron @Auth @Admin @AdminCreateWarehouse
@@ -41,7 +41,7 @@ Feature: Authentication Admin Positive
       | adminEmail | adminPassword |
     And Admin verify status code is 200
     And Admin verify response is match with json schema "authlogin.json"
-    Then Admin get auth token
+    Then Admin admin get auth token
     Given Admin call api "/admin/warehouse" with method "GET"
     And Admin verify status code is 200
     And Admin verify response is match with json schema "getAllWarehouse.json"
@@ -53,7 +53,7 @@ Feature: Authentication Admin Positive
       | adminEmail | adminPassword |
     And Admin verify status code is 200
     And Admin verify response is match with json schema "authlogin.json"
-    Then Admin get auth token
+    Then Admin admin get auth token
     Given Admin call api "/admin/warehouse/1" with method "DELETE"
     Then Admin verify status code is 200
 
