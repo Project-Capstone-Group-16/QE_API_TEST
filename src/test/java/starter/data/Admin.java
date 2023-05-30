@@ -1,9 +1,9 @@
 package starter.data;
 
 public class Admin {
-    String adminEmail = "admin11@gmail.com";
+    String adminEmail = "admin1234@gmail.com";
     String adminPassword = "admin123";
-    String token;
+    String auth;
 
     public String getAdminEmail() {
         return adminEmail;
@@ -21,12 +21,11 @@ public class Admin {
         this.adminPassword = adminPassword;
     }
 
-    public String getToken() {
-        return token;
+    public String getAuth() {
+        return auth;
     }
 
-    public void setToken(String token) {
-        this.token = token;
+    public void setAuth(String auth) {
+        this.auth = auth;
     }
-
 }
