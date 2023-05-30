@@ -226,12 +226,4 @@ public class APIStepDefinitions {
         System.out.println(admin.getAuth());
 
     }
-
-//    @And("{actor} get auth token")
-//    public void userGetAuthToken(Actor actor){
-//        Response response = SerenityRest.lastResponse();
-//        user.setToken(response.path("data"));
-//    }
-
-
 }
