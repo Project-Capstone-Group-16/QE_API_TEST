@@ -8,16 +8,24 @@
     "data": {
       "type": "object",
       "properties": {
-        "email": {
+        "name": {
           "type": "string"
         },
-        "password": {
+        "location": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "image_url": {
           "type": "string"
         }
       },
       "required": [
-        "email",
-        "password"
+        "name",
+        "location",
+        "status",
+        "image_url"
       ]
     }
   },

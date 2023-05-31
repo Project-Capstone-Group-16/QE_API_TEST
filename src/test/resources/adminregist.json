@@ -8,15 +8,23 @@
     "data": {
       "type": "object",
       "properties": {
+        "fullname": {
+          "type": "string"
+        },
         "email": {
           "type": "string"
+        },
+        "phone_number": {
+          "type": "integer"
         },
         "password": {
           "type": "string"
         }
       },
       "required": [
+        "fullname",
         "email",
+        "phone_number",
         "password"
       ]
     }
