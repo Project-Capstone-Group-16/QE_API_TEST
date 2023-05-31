@@ -4,28 +4,21 @@ import com.github.javafaker.Faker;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
-//import io.cucumber.java.en.And;
-import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import net.serenitybdd.rest.SerenityRest;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.rest.abilities.CallAnApi;
 import net.serenitybdd.screenplay.rest.interactions.*;
-//import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import starter.data.Admin;
 import starter.data.User;
 
-//import java.util.ArrayList;
 import java.io.File;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import static io.restassured.RestAssured.given;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
-//import static org.hamcrest.Matchers.emptyString;
-//import static org.hamcrest.Matchers.not;
 
 public class APIStepDefinitions {
 
