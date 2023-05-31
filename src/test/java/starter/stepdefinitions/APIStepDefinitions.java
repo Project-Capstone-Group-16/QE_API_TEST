@@ -4,27 +4,21 @@ import com.github.javafaker.Faker;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
-//import io.cucumber.java.en.And;
-import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import net.serenitybdd.rest.SerenityRest;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.rest.abilities.CallAnApi;
 import net.serenitybdd.screenplay.rest.interactions.*;
-//import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import starter.data.Admin;
 import starter.data.User;
 
-//import java.util.ArrayList;
 import java.io.File;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
-//import static org.hamcrest.Matchers.emptyString;
-//import static org.hamcrest.Matchers.not;
 
 public class APIStepDefinitions {
 
@@ -142,7 +136,6 @@ public class APIStepDefinitions {
     public void userVerifyResponseIsMatchWithJsonSchema(Actor actor, String schema) {
         Response response = SerenityRest.lastResponse();
         response.then().body(matchesJsonSchemaInClasspath(schema));
-        System.out.println(admin.getAuth());
     }
 
     @Then("{actor} verify status code is {int}")
@@ -155,6 +148,8 @@ public class APIStepDefinitions {
     public void adminGetAuth(Actor actor) {
         Response response = SerenityRest.lastResponse();
         admin.setAuth(response.path("data.token"));
+
+        System.out.println(admin.getAuth());
     }
 
     @Then("{actor} user get auth token")
@@ -167,38 +162,25 @@ public class APIStepDefinitions {
     public void userCallApiWithMethod(Actor actor, String path, String method) {
         actor.whoCan(CallAnApi.at(baseURL));
 
+        Faker faker = new Faker(new Locale("in-ID"));
+        String location = faker.address().city();
+        String nameWarehouse = "Inventron " + location;
+
+        File file = new File(System.getProperty("user.dir") + "/src/test/resources/img/warehouse.jpg");
+
         switch (method) {
             case "GET" ->
                     actor.attemptsTo(Get.resource(path).with(request -> request.header("Authorization", "Bearer " + admin.getAuth())));
-            case "POST" -> actor.attemptsTo(Post.to(path));
-            case "PUT" -> actor.attemptsTo(Put.to(path));
+
+            case "POST" -> actor.attemptsTo(Post.to(path).with(request -> request.contentType("multipart/form-data").header("Authorization", "Bearer " + admin.getAuth())
+                    .multiPart("name", nameWarehouse).multiPart("location", location).multiPart("warehouse_image", file,"image/jpeg")));
+
+            case "PUT" -> actor.attemptsTo(Put.to(path).with(request -> request.contentType("multipart/form-data").header("Authorization", "Bearer " + admin.getAuth())
+                    .multiPart("name", nameWarehouse).multiPart("location", location).multiPart("status", "Not Available").multiPart("warehouse_image", file,"image/jpeg")));
+
             case "DELETE" -> actor.attemptsTo(Delete.from(path).with(request -> request.header("Authorization", "Bearer " + admin.getAuth())));
+
             default -> throw new IllegalStateException("Unknown method");
         }
-        System.out.println(admin.getAuth());
-    }
-
-    @Given("{actor} create warehouse {string}")
-    public void adminCreateWarehouse(Actor actor, String path) {
-        actor.whoCan(CallAnApi.at(baseURL));
-
-        Faker faker = new Faker(new Locale("in-ID"));
-        String nameWarehouse = "Inventron" + faker.address().city();
-        String location = faker.address().city();
-
-        File file = new File("C:/Users/My Windows/Pictures/After/DSC02390.jpg");
-
-        Response response = RestAssured
-                .given()
-//                .formParam("token", admin.getToken())
-                .multiPart("name", nameWarehouse, "multipart/form-data")
-                .multiPart("location", location, "multipart/form-data")
-                .multiPart("warehouse_image", file, "multipart/form-data")
-                .when()
-                .post();
-
-        actor.attemptsTo(Post.to(path).with(request -> request.header("Authorization", "Bearer " + admin.getAuth()).body(response)));
-        System.out.println(admin.getAuth());
-
     }
 }
