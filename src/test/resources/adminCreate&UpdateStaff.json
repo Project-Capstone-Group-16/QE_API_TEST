@@ -8,19 +8,22 @@
     "data": {
       "type": "object",
       "properties": {
-        "first_name": {
+        "full_name": {
           "type": "string"
         },
-        "last_name": {
+        "occupation": {
           "type": "string"
         },
-        "email": {
+        "gender": {
+          "type": "string"
+        },
+        "birth_date": {
           "type": "string"
         },
         "phone_number": {
           "type": "string"
         },
-        "password": {
+        "address": {
           "type": "string"
         }
       }
