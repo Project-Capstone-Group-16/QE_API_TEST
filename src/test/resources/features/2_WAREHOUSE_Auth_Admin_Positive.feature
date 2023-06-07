@@ -1,21 +1,21 @@
 Feature: Authentication Admin Positive
 
-  @Inventron @Auth @Admin @AdminAuth @AdminRegister
+  @Inventron @Auth @Admin @AdminNoAuth @AdminRegister
   Scenario: Admin register with idendity in API Inventron
-    Given Admin is call an api "/register/admin" with method "POST" with payload below
-      | full_name      | email       | phone_number | password       | confirm_password |
-      | randomFullname | randomEmail | 85591717699 | randomPassword | adminPassword    |
+    Given Admin admin want call an api "/register/admin" with method "POST" with payload below
+      | first_name      | last_name       | email       | phone_number | password       | confirm_password |
+      | randomFirstname | randomLastname  | randomEmail | 85591717699  | randomPassword | adminPassword    |
     Then Admin verify status code is 200
     Then Admin verify response is match with json schema "adminRegis.json"
-    Given Admin is call an api "/login/admin" with method "POST" with payload below
+    Given Admin admin want call an api "/login/admin" with method "POST" with payload below
       | email      | password      |
       | adminEmail | adminPassword |
     Then Admin verify status code is 200
     Then Admin verify response is match with json schema "authlogin.json"
 
-  @Inventron @Auth @Admin @AdminAuth @AdminLogin
+  @Inventron @Auth @Admin @AdminNoAuth @AdminLogin
   Scenario: Admin login with idendity in API Inventron
-    Given Admin is call an api "/login/admin" with method "POST" with payload below
+    Given Admin admin want call an api "/login/admin" with method "POST" with payload below
       | email      | password      |
       | adminEmail | adminPassword |
     And Admin verify status code is 200
@@ -24,48 +24,75 @@ Feature: Authentication Admin Positive
 
   @Inventron @Auth @Admin @AdminAuth @AdminCreateWarehouse
   Scenario: Admin create warehouse in API Inventron
-    Given Admin is call an api "/login/admin" with method "POST" with payload below
+    Given Admin admin want call an api "/login/admin" with method "POST" with payload below
       | email      | password      |
       | adminEmail | adminPassword |
     And Admin verify status code is 200
     And Admin verify response is match with json schema "authlogin.json"
     Then Admin admin get auth token
-    Given Admin create warehouse "/admin/warehouse" method "POST"
+    Given Admin admin call api "/admin/warehouse" with method "POST"
     And Admin verify status code is 200
     And Admin verify response is match with json schema "createWarehouse.json"
 
   @Inventron @Auth @Admin @AdminAuth @AdminUpdateWarehouse
   Scenario: Admin update warehouse in API Inventron
-    Given Admin is call an api "/login/admin" with method "POST" with payload below
+    Given Admin admin want call an api "/login/admin" with method "POST" with payload below
       | email      | password      |
       | adminEmail | adminPassword |
     And Admin verify status code is 200
     And Admin verify response is match with json schema "authlogin.json"
     Then Admin admin get auth token
-    Given Admin call api "/admin/warehouse/3" with method "PUT"
+    Given Admin admin call api "/admin/warehouse/3" with method "PUT"
     And Admin verify status code is 200
-    And Admin verify response is match with json schema "createWarehouse.json"
+    And Admin verify response is match with json schema "updateWarehouse.json"
 
   @Inventron @Auth @Admin @AdminAuth @AdminGetAllWarehouse
   Scenario: Admin get all warehouse in API Inventron
-    Given Admin is call an api "/login/admin" with method "POST" with payload below
+    Given Admin admin want call an api "/login/admin" with method "POST" with payload below
       | email      | password      |
       | adminEmail | adminPassword |
     And Admin verify status code is 200
     And Admin verify response is match with json schema "authlogin.json"
     Then Admin admin get auth token
-    Given Admin call api "/admin/warehouse" with method "GET"
+    Given Admin admin call api "/admin/warehouse" with method "GET"
     And Admin verify status code is 200
     And Admin verify response is match with json schema "getAllWarehouse.json"
 
-  @Inventron @Auth @Admin @AdminAuth @AdminDeletWarehouseById
+  @Inventron @Auth @Admin @AdminAuth @AdminDeleteWarehouseById
   Scenario: Admin delete warehouse by id in API Inventron
-    Given Admin is call an api "/login/admin" with method "POST" with payload below
+    Given Admin admin want call an api "/login/admin" with method "POST" with payload below
       | email      | password      |
       | adminEmail | adminPassword |
     And Admin verify status code is 200
     And Admin verify response is match with json schema "authlogin.json"
     Then Admin admin get auth token
-    Given Admin call api "/admin/warehouse/5" with method "DELETE"
+    Given Admin admin call api "/admin/warehouse/5" with method "DELETE"
     Then Admin verify status code is 200
 
+  @Inventron @Auth @Admin @AdminAuth @CreateStaff
+  Scenario: Admin create staff with idendity in API Inventron
+    Given Admin admin want call an api "/login/admin" with method "POST" with payload below
+      | email      | password      |
+      | adminEmail | adminPassword |
+    And Admin verify status code is 200
+    Then Admin verify response is match with json schema "authlogin.json"
+    Then Admin admin get auth token
+    Given Admin admin want call an api "/admin/staff" with method "POST" with payload below
+      | full_name      | occupation | birth_date | gender | phone_number | address       |
+      | randomFullname | CS         | 25/04/2002 | WANITA | 85171212504  | randomAddress |
+    And Admin verify status code is 200
+    Then Admin verify response is match with json schema "adminCreate&UpdateStaff.json"
+
+  @Inventron @Auth @Admin @AdminAuth @UpdateStaffById
+  Scenario: Admin update staff with idendity in API Inventron
+    Given Admin admin want call an api "/login/admin" with method "POST" with payload below
+      | email      | password      |
+      | adminEmail | adminPassword |
+    And Admin verify status code is 200
+    Then Admin verify response is match with json schema "authlogin.json"
+    Then Admin admin get auth token
+    Given Admin admin want call an api "/admin/staff/11" with method "PUT" with payload below
+      | full_name      | occupation | birth_date | gender | phone_number | address       |
+      | randomFullname | CS         | 25/04/2002 | WANITA | 85171212504  | randomAddress |
+    And Admin verify status code is 200
+    Then Admin verify response is match with json schema "adminCreate&UpdateStaff.json"

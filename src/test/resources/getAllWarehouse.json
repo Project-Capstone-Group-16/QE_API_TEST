@@ -16,28 +16,29 @@
           "name": {
             "type": "string"
           },
-          "location": {
+          "city": {
+            "type": "string"
+          },
+          "province": {
             "type": "string"
           },
           "status": {
             "type": "string"
           },
+          "capacity": {
+            "type": "integer",
+            "enum": [
+              0
+            ]
+          },
+          "favorite": {
+            "type": "integer"
+          },
           "image_url": {
             "type": "string"
           }
-        },
-        "required": [
-          "id",
-          "name",
-          "location",
-          "status",
-          "image_url"
-        ]
+        }
       }
     }
-  },
-  "required": [
-    "message",
-    "data"
-  ]
+  }
 }
