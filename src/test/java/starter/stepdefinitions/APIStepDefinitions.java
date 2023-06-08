@@ -83,6 +83,10 @@ public class APIStepDefinitions {
                     String imageUrl = image_url;
                     bodyRequest.put(key, imageUrl);
                 }
+                case "favoriteWarehouse" ->{
+                    int favoriteWarehouse = 1;
+                    bodyRequest.put(key, favoriteWarehouse);
+                }
 
                 case "userEmail" -> bodyRequest.put(key, user.getUserEmail());
                 case "userPassword" -> bodyRequest.put(key, user.getUserPassword());
@@ -185,10 +189,6 @@ public class APIStepDefinitions {
                 case "randomAddress" -> {
                     String randomAddress = faker.address().fullAddress();
                     bodyRequest.put(key, randomAddress);
-                }
-                case "randomDateBrith" ->{
-                    String randomDateBrith = faker.date().birthday().toString();
-                    bodyRequest.put(key, randomDateBrith);
                 }
 
                 case "adminEmail" -> bodyRequest.put(key, admin.getAdminEmail());
@@ -296,4 +296,19 @@ public class APIStepDefinitions {
         response.then().log().all();
     }
 
+    @Given("{actor} want favorite warehouse path {string} with method {string}")
+    public void userWantFavoriteWarehouseWithMethod(Actor actor,String path, String method) {
+        actor.whoCan(CallAnApi.at(baseURL));
+
+        JSONObject bodyrequest = new JSONObject();
+
+        bodyrequest.put("warehouse_id", 1);
+
+        switch (method) {
+
+            case "POST" -> actor.attemptsTo(Post.to(path).with(request -> request.header("Authorization", "Bearer " + user.getAuth()).body(bodyrequest)));
+
+            default -> throw new IllegalStateException("Unknown method");
+        }
+    }
 }

@@ -71,14 +71,11 @@ Feature: Authentication User Positive
     Then User verify status code is 200
     Then User user get auth token
     Then User verify response is match with json schema "authlogin.json"
-    Given User user want call an api "/warehouse/favorite" with method "POST" with payload below
-      | warehouse_id |
-      | 3            |
+    Given User want favorite warehouse path "/warehouse/favorite" with method "POST"
     Then User verify status code is 200
-#    Then User verify response is match with json schema "authlogin.json"
 
   @Inventron @User @UpdateProfile
-  Scenario: User create favorite warehouse
+  Scenario: User update profile
     Given User user want call an api "/login" with method "POST" with payload below
       | email     | password     |
       | userEmail | userPassword |
@@ -86,7 +83,7 @@ Feature: Authentication User Positive
     Then User user get auth token
     Then User verify response is match with json schema "authlogin.json"
     Given User user want call an api "/profile/update" with method "PUT" with payload below
-      | first_name      | last_name      | birth_date      | gender | phone_number | address       | image_url |
-      | randomFirstname | randomLastname | randomDateBrith | PRIA   | 85591717699  | randomAddress | imageUrl  |
+      | first_name      | last_name      | birth_date | gender | phone_number | address       | image_url |
+      | randomFirstname | randomLastname | 25/04/2002 | PRIA   | 85591717699  | randomAddress | imageUrl  |
     And User verify status code is 200
     Then User verify response is match with json schema "userUpdateProfile.json"
