@@ -31,6 +31,8 @@ public class APIStepDefinitions {
     public void callApiAsUserPayload(Actor actor, String path, String method, DataTable table) {
         actor.whoCan(CallAnApi.at(baseURL));
 
+        String image_url = "/src/test/resources/img/warehouse.jpg";
+
         // Create request body json instance
         JSONObject bodyRequest = new JSONObject();
 
@@ -65,9 +67,21 @@ public class APIStepDefinitions {
                     String randomFullname = faker.name().fullName();
                     bodyRequest.put(key, randomFullname);
                 }
+                case "randomFirstname" -> {
+                    String randomFirstname = faker.name().firstName();
+                    bodyRequest.put(key, randomFirstname);
+                }
+                case "randomLastname" -> {
+                    String randomLastname = faker.name().lastName();
+                    bodyRequest.put(key, randomLastname);
+                }
                 case "randomAddress" -> {
                     String randomAddress = faker.address().fullAddress();
                     bodyRequest.put(key, randomAddress);
+                }
+                case "imageUrl" -> {
+                    String imageUrl = image_url;
+                    bodyRequest.put(key, imageUrl);
                 }
 
                 case "userEmail" -> bodyRequest.put(key, user.getUserEmail());
@@ -171,6 +185,10 @@ public class APIStepDefinitions {
                 case "randomAddress" -> {
                     String randomAddress = faker.address().fullAddress();
                     bodyRequest.put(key, randomAddress);
+                }
+                case "randomDateBrith" ->{
+                    String randomDateBrith = faker.date().birthday().toString();
+                    bodyRequest.put(key, randomDateBrith);
                 }
 
                 case "adminEmail" -> bodyRequest.put(key, admin.getAdminEmail());
