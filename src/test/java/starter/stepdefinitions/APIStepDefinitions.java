@@ -31,6 +31,8 @@ public class APIStepDefinitions {
     public void callApiAsUserPayload(Actor actor, String path, String method, DataTable table) {
         actor.whoCan(CallAnApi.at(baseURL));
 
+        String image_url = "/src/test/resources/img/warehouse.jpg";
+
         // Create request body json instance
         JSONObject bodyRequest = new JSONObject();
 
@@ -65,9 +67,25 @@ public class APIStepDefinitions {
                     String randomFullname = faker.name().fullName();
                     bodyRequest.put(key, randomFullname);
                 }
+                case "randomFirstname" -> {
+                    String randomFirstname = faker.name().firstName();
+                    bodyRequest.put(key, randomFirstname);
+                }
+                case "randomLastname" -> {
+                    String randomLastname = faker.name().lastName();
+                    bodyRequest.put(key, randomLastname);
+                }
                 case "randomAddress" -> {
                     String randomAddress = faker.address().fullAddress();
                     bodyRequest.put(key, randomAddress);
+                }
+                case "imageUrl" -> {
+                    String imageUrl = image_url;
+                    bodyRequest.put(key, imageUrl);
+                }
+                case "favoriteWarehouse" ->{
+                    int favoriteWarehouse = 1;
+                    bodyRequest.put(key, favoriteWarehouse);
                 }
 
                 case "userEmail" -> bodyRequest.put(key, user.getUserEmail());
@@ -278,4 +296,19 @@ public class APIStepDefinitions {
         response.then().log().all();
     }
 
+    @Given("{actor} want favorite warehouse path {string} with method {string}")
+    public void userWantFavoriteWarehouseWithMethod(Actor actor,String path, String method) {
+        actor.whoCan(CallAnApi.at(baseURL));
+
+        JSONObject bodyrequest = new JSONObject();
+
+        bodyrequest.put("warehouse_id", 1);
+
+        switch (method) {
+
+            case "POST" -> actor.attemptsTo(Post.to(path).with(request -> request.header("Authorization", "Bearer " + user.getAuth()).body(bodyrequest)));
+
+            default -> throw new IllegalStateException("Unknown method");
+        }
+    }
 }
