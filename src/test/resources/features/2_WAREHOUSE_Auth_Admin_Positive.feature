@@ -70,7 +70,7 @@ Feature: Authentication Admin Positive
     And Admin verify status code is 200
     And Admin verify response is match with json schema "authlogin.json"
     Then Admin admin get auth token
-    Given Admin admin call api "/admin/warehouse/5" with method "DELETE"
+    Given Admin admin call api "/admin/warehouse/1" with method "DELETE"
     Then Admin verify status code is 200
 
   @Inventron @Auth @Admin @AdminAuth @CreateStaff
@@ -100,3 +100,7 @@ Feature: Authentication Admin Positive
       | randomFullname | CS         | 25/04/2002 | WANITA | 85171212504  | randomAddress |
     And Admin verify status code is 200
     Then Admin verify response is match with json schema "adminCreate&UpdateStaff.json"
+
+
+    #automate ganti id
+  # fixing json schema

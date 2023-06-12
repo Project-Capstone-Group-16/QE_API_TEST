@@ -161,10 +161,11 @@ public class APIStepDefinitions {
         // Loop on every values and set value with key from header to request body
         for (int i = 0; i < valueList.size(); i++) {
             Faker faker = new Faker(new Locale("in-ID"));
-            String location = faker.address().city();
-            String nameWarehouse = "Inventron " + location;
+
+
             File file = new File(System.getProperty("user.dir") + "/src/test/resources/img/warehouse.jpg");
             String imgUrl = String.valueOf(file);
+
 
             String key = headerList.get(i);
 
@@ -197,11 +198,13 @@ public class APIStepDefinitions {
                     String randomAddress = faker.address().fullAddress();
                     bodyRequest.put(key, randomAddress);
                 }
-                case "nameWarehouse" ->
-                    bodyRequest.put(key, nameWarehouse);
-
+                case "nameWarehouse" -> {
+                    String location = faker.address().city();
+                    bodyRequest.put(key, "Inventron " + location);
+                    admin.setLocation(location);
+                }
                 case "cityWarehouse" ->
-                    bodyRequest.put(key, location);
+                    bodyRequest.put(key, admin.getLocation());
 
                 case "descriptionWarehouse" -> {
                     String description = faker.lorem().sentence();

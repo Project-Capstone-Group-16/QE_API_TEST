@@ -11,10 +11,19 @@
         "name": {
           "type": "string"
         },
-        "location": {
+        "city": {
           "type": "string"
         },
+        "address": {
+          "type": "string"
+        },
+        "capacity": {
+          "type": "integer"
+        },
         "status": {
+          "type": "string"
+        },
+        "description": {
           "type": "string"
         },
         "image_url": {
@@ -23,8 +32,11 @@
       },
       "required": [
         "name",
-        "location",
+        "city",
+        "address",
+        "capacity",
         "status",
+        "description",
         "image_url"
       ]
     }
