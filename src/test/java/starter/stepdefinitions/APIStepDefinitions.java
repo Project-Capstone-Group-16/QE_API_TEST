@@ -11,6 +11,7 @@ import net.serenitybdd.screenplay.rest.abilities.CallAnApi;
 import net.serenitybdd.screenplay.rest.interactions.*;
 import org.json.simple.JSONObject;
 import starter.data.Admin;
+import starter.data.Jabatan;
 import starter.data.User;
 
 import java.io.File;
@@ -26,6 +27,8 @@ public class APIStepDefinitions {
 
     User user = new User();
     Admin admin = new Admin();
+
+    Jabatan jabatan = new Jabatan();
 
     @Given("{actor} user want call an api {string} with method {string} with payload below")
     public void callApiAsUserPayload(Actor actor, String path, String method, DataTable table) {
@@ -87,7 +90,7 @@ public class APIStepDefinitions {
                     int favoriteWarehouse = 1;
                     bodyRequest.put(key, favoriteWarehouse);
                 }
-
+                case "gender" -> bodyRequest.put(key, jabatan.forGender());
                 case "userEmail" -> bodyRequest.put(key, user.getUserEmail());
                 case "userPassword" -> bodyRequest.put(key, user.getUserPassword());
                 default -> bodyRequest.put(key, valueList.get(key));
@@ -205,9 +208,9 @@ public class APIStepDefinitions {
                     bodyRequest.put(key, description);
                 }
 
-                case "imageUrl" ->
-                    bodyRequest.put(key, imgUrl);
-
+                case "posision" -> bodyRequest.put(key, jabatan.forPosision());
+                case "gender" -> bodyRequest.put(key, jabatan.forGender());
+                case "imageUrl" -> bodyRequest.put(key, imgUrl);
                 case "adminEmail" -> bodyRequest.put(key, admin.getAdminEmail());
                 case "adminPassword" -> bodyRequest.put(key, admin.getAdminPassword());
                 default -> bodyRequest.put(key, valueList.get(key));
