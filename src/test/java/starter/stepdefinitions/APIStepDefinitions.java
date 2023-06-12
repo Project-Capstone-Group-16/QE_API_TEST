@@ -158,6 +158,10 @@ public class APIStepDefinitions {
         // Loop on every values and set value with key from header to request body
         for (int i = 0; i < valueList.size(); i++) {
             Faker faker = new Faker(new Locale("in-ID"));
+            String location = faker.address().city();
+            String nameWarehouse = "Inventron " + location;
+            File file = new File(System.getProperty("user.dir") + "/src/test/resources/img/warehouse.jpg");
+            String imgUrl = String.valueOf(file);
 
             String key = headerList.get(i);
 
@@ -190,6 +194,19 @@ public class APIStepDefinitions {
                     String randomAddress = faker.address().fullAddress();
                     bodyRequest.put(key, randomAddress);
                 }
+                case "nameWarehouse" ->
+                    bodyRequest.put(key, nameWarehouse);
+
+                case "cityWarehouse" ->
+                    bodyRequest.put(key, location);
+
+                case "descriptionWarehouse" -> {
+                    String description = faker.lorem().sentence();
+                    bodyRequest.put(key, description);
+                }
+
+                case "imageUrl" ->
+                    bodyRequest.put(key, imgUrl);
 
                 case "adminEmail" -> bodyRequest.put(key, admin.getAdminEmail());
                 case "adminPassword" -> bodyRequest.put(key, admin.getAdminPassword());
@@ -218,7 +235,7 @@ public class APIStepDefinitions {
         }
     }
 
-    @Given("{actor} admin want call an api {string} with method {string}")
+    @Given("{actor} admin call api {string} with method {string}")
     public void callApiAsAdmin(Actor actor, String path, String method) {
         actor.whoCan(CallAnApi.at(baseURL));
 
@@ -236,36 +253,10 @@ public class APIStepDefinitions {
                 actor.attemptsTo(Patch.to(path));
                 break;
             case "DELETE":
-                actor.attemptsTo(Delete.from(path));
+                actor.attemptsTo(Delete.from(path).with(request -> request.header("Authorization", "Bearer " + admin.getAuth())));
                 break;
             default:
                 throw new IllegalStateException("Unknown method");
-        }
-    }
-
-    @Given("{actor} admin call api {string} with method {string}")
-    public void userCallApiWithMethod(Actor actor, String path, String method) {
-        actor.whoCan(CallAnApi.at(baseURL));
-
-        Faker faker = new Faker(new Locale("in-ID"));
-        String location = faker.address().city();
-        String nameWarehouse = "Inventron " + location;
-
-        File file = new File(System.getProperty("user.dir") + "/src/test/resources/img/warehouse.jpg");
-
-        switch (method) {
-            case "GET" ->
-                    actor.attemptsTo(Get.resource(path).with(request -> request.header("Authorization", "Bearer " + admin.getAuth())));
-
-            case "POST" -> actor.attemptsTo(Post.to(path).with(request -> request.contentType("multipart/form-data").header("Authorization", "Bearer " + admin.getAuth())
-                    .multiPart("name", nameWarehouse).multiPart("location", location).multiPart("warehouse_image", file,"image/jpeg")));
-
-            case "PUT" -> actor.attemptsTo(Put.to(path).with(request -> request.contentType("multipart/form-data").header("Authorization", "Bearer " + admin.getAuth())
-                    .multiPart("name", nameWarehouse).multiPart("location", location).multiPart("status", "Not Available").multiPart("warehouse_image", file,"image/jpeg")));
-
-            case "DELETE" -> actor.attemptsTo(Delete.from(path).with(request -> request.header("Authorization", "Bearer " + admin.getAuth())));
-
-            default -> throw new IllegalStateException("Unknown method");
         }
     }
 
@@ -312,3 +303,30 @@ public class APIStepDefinitions {
         }
     }
 }
+
+
+//@Given("{actor} admin call api {string} with method {string}")
+//    public void userCallApiWithMethod(Actor actor, String path, String method) {
+//        actor.whoCan(CallAnApi.at(baseURL));
+//
+//        Faker faker = new Faker(new Locale("in-ID"));
+//        String location = faker.address().city();
+//        String nameWarehouse = "Inventron " + location;
+//
+//        File file = new File(System.getProperty("user.dir") + "/src/test/resources/img/warehouse.jpg");
+//
+//        switch (method) {
+//            case "GET" ->
+//                    actor.attemptsTo(Get.resource(path).with(request -> request.header("Authorization", "Bearer " + admin.getAuth())));
+//
+//            case "POST" -> actor.attemptsTo(Post.to(path).with(request -> request.contentType("multipart/form-data").header("Authorization", "Bearer " + admin.getAuth())
+//                    .multiPart("name", nameWarehouse).multiPart("location", location).multiPart("warehouse_image", file,"image/jpeg")));
+//
+//            case "PUT" -> actor.attemptsTo(Put.to(path).with(request -> request.contentType("multipart/form-data").header("Authorization", "Bearer " + admin.getAuth())
+//                    .multiPart("name", nameWarehouse).multiPart("location", location).multiPart("status", "Not Available").multiPart("warehouse_image", file,"image/jpeg")));
+//
+//            case "DELETE" -> actor.attemptsTo(Delete.from(path).with(request -> request.header("Authorization", "Bearer " + admin.getAuth())));
+//
+//            default -> throw new IllegalStateException("Unknown method");
+//        }
+//    }

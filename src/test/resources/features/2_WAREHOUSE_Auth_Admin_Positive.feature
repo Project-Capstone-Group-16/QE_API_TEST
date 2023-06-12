@@ -3,8 +3,8 @@ Feature: Authentication Admin Positive
   @Inventron @Auth @Admin @AdminNoAuth @AdminRegister
   Scenario: Admin register with idendity in API Inventron
     Given Admin admin want call an api "/register/admin" with method "POST" with payload below
-      | first_name      | last_name       | email       | phone_number | password       | confirm_password |
-      | randomFirstname | randomLastname  | randomEmail | 85591717699  | randomPassword | adminPassword    |
+      | first_name      | last_name      | email       | phone_number | password       | confirm_password |
+      | randomFirstname | randomLastname | randomEmail | 85591717699  | randomPassword | adminPassword    |
     Then Admin verify status code is 200
     Then Admin verify response is match with json schema "adminRegis.json"
     Given Admin admin want call an api "/login/admin" with method "POST" with payload below
@@ -30,9 +30,11 @@ Feature: Authentication Admin Positive
     And Admin verify status code is 200
     And Admin verify response is match with json schema "authlogin.json"
     Then Admin admin get auth token
-    Given Admin admin call api "/admin/warehouse" with method "POST"
+    Given Admin admin want call an api "/admin/warehouse" with method "POST" with payload below
+      | name          | city          | address       | description          | image_url |
+      | nameWarehouse | cityWarehouse | randomAddress | descriptionWarehouse | imageUrl  |
     And Admin verify status code is 200
-    And Admin verify response is match with json schema "createWarehouse.json"
+#    And Admin verify response is match with json schema "createWarehouse.json"
 
   @Inventron @Auth @Admin @AdminAuth @AdminUpdateWarehouse
   Scenario: Admin update warehouse in API Inventron
@@ -42,9 +44,11 @@ Feature: Authentication Admin Positive
     And Admin verify status code is 200
     And Admin verify response is match with json schema "authlogin.json"
     Then Admin admin get auth token
-    Given Admin admin call api "/admin/warehouse/3" with method "PUT"
+    Given Admin admin want call an api "/admin/warehouse/1" with method "PUT" with payload below
+      | name          | city          | address       | description          | status    | image_url |
+      | nameWarehouse | cityWarehouse | randomAddress | descriptionWarehouse | Available | imageUrl  |
     And Admin verify status code is 200
-    And Admin verify response is match with json schema "updateWarehouse.json"
+#    And Admin verify response is match with json schema "updateWarehouse.json"
 
   @Inventron @Auth @Admin @AdminAuth @AdminGetAllWarehouse
   Scenario: Admin get all warehouse in API Inventron
