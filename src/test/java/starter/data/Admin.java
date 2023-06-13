@@ -2,9 +2,18 @@ package starter.data;
 
 public class Admin {
 
-    String adminEmail = "qecapstone16@gmail.com";
-    String adminPassword = "samtingwong";
+    String adminEmail = "admin1234@gmail.com";
+    String adminPassword = "admin123";
     String auth;
+    String location;
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
 
 
     public String getAdminEmail() {
