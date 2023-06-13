@@ -218,7 +218,7 @@ public class APIStepDefinitions {
 
                 case "posision" -> bodyRequest.put(key, jabatan.forPosision());
                 case "gender" -> bodyRequest.put(key, jabatan.forGender());
-                case "imageUrl" -> bodyRequest.put(key, imgUrl);
+                case "imageUrl" -> bodyRequest.put(key, faker.internet().avatar());
                 case "adminEmail" -> bodyRequest.put(key, admin.getAdminEmail());
                 case "adminPassword" -> bodyRequest.put(key, admin.getAdminPassword());
                 default -> bodyRequest.put(key, valueList.get(key));
