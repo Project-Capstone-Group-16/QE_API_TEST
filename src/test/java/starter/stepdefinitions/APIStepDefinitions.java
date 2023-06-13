@@ -2,6 +2,7 @@ package starter.stepdefinitions;
 
 import com.github.javafaker.Faker;
 import io.cucumber.datatable.DataTable;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.restassured.response.Response;
@@ -11,6 +12,7 @@ import net.serenitybdd.screenplay.rest.abilities.CallAnApi;
 import net.serenitybdd.screenplay.rest.interactions.*;
 import org.json.simple.JSONObject;
 import starter.data.Admin;
+import starter.data.ID;
 import starter.data.Jabatan;
 import starter.data.User;
 
@@ -29,6 +31,7 @@ public class APIStepDefinitions {
     Admin admin = new Admin();
 
     Jabatan jabatan = new Jabatan();
+    ID id = new ID();
 
     @Given("{actor} user want call an api {string} with method {string} with payload below")
     public void callApiAsUserPayload(Actor actor, String path, String method, DataTable table) {
@@ -301,13 +304,37 @@ public class APIStepDefinitions {
 
         bodyrequest.put("warehouse_id", 1);
 
-        switch (method) {
-
-            case "POST" -> actor.attemptsTo(Post.to(path).with(request -> request.header("Authorization", "Bearer " + user.getAuth()).body(bodyrequest)));
-
-            default -> throw new IllegalStateException("Unknown method");
+        if (method.equals("POST")) {
+            actor.attemptsTo(Post.to(path).with(request -> request.header("Authorization", "Bearer " + user.getAuth()).body(bodyrequest)));
+        } else {
+            throw new IllegalStateException("Unknown method");
         }
     }
+
+    @And("{actor} automate get id {string}")
+    public void adminAutomateGetId(Actor actor, String type) {
+        actor.whoCan(CallAnApi.at(baseURL));
+
+        String pathWarehouse = "/admin/warehouse";
+        String pathStaff = "/admin/staff";
+
+        Response response = SerenityRest.lastResponse();
+
+        switch (type){
+            case "warehouse" -> {
+                actor.attemptsTo(Get.resource(pathWarehouse).with(request -> request.header("Authorization", "Bearer " + admin.getAuth())));
+                id.setIdWarehouse(response.path("data.token"));
+                System.out.println(id.getIdWarehouse());
+            }
+            case "staff" -> {
+                actor.attemptsTo(Get.resource(pathStaff).with(request -> request.header("Authorization", "Bearer " + admin.getAuth())));
+                id.setIdStaff(response.path("data.token"));
+                System.out.println(id.getIdStaff());
+            }
+        }
+
+    }
+
 }
 
 
