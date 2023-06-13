@@ -34,7 +34,7 @@ Feature: Authentication Admin Positive
       | name          | city          | address       | description          | image_url |
       | nameWarehouse | cityWarehouse | randomAddress | descriptionWarehouse | imageUrl  |
     And Admin verify status code is 200
-#    And Admin verify response is match with json schema "createWarehouse.json"
+    And Admin verify response is match with json schema "createWarehouse.json"
 
   @Inventron @Auth @Admin @AdminAuth @AdminUpdateWarehouse
   Scenario: Admin update warehouse in API Inventron
@@ -44,12 +44,12 @@ Feature: Authentication Admin Positive
     And Admin verify status code is 200
     And Admin verify response is match with json schema "authlogin.json"
     Then Admin admin get auth token
-    And Admin automate get id "warehouse"
-    Given Admin admin want call an api "/admin/warehouse/1" with method "PUT" with payload below
+#    And Admin automate get id "warehouse"
+    Given Admin admin want call an api "/admin/warehouse/11" with method "PUT" with payload below
       | name          | city          | address       | description          | status    | image_url |
       | nameWarehouse | cityWarehouse | randomAddress | descriptionWarehouse | Available | imageUrl  |
     And Admin verify status code is 200
-#    And Admin verify response is match with json schema "updateWarehouse.json"
+    And Admin verify response is match with json schema "updateWarehouse.json"
 
   @Inventron @Auth @Admin @AdminAuth @AdminGetAllWarehouse
   Scenario: Admin get all warehouse in API Inventron
@@ -61,6 +61,7 @@ Feature: Authentication Admin Positive
     Then Admin admin get auth token
     Given Admin admin call api "/admin/warehouse" with method "GET"
     And Admin verify status code is 200
+    And Admin automate get id "warehouse"
     And Admin verify response is match with json schema "getAllWarehouse.json"
 
   @Inventron @Auth @Admin @AdminAuth @AdminDeleteWarehouseById
@@ -71,7 +72,7 @@ Feature: Authentication Admin Positive
     And Admin verify status code is 200
     And Admin verify response is match with json schema "authlogin.json"
     Then Admin admin get auth token
-    Given Admin admin call api "/admin/warehouse/1" with method "DELETE"
+    Given Admin admin call api "/admin/warehouse/10" with method "DELETE"
     Then Admin verify status code is 200
 
   @Inventron @Auth @Admin @AdminAuth @CreateStaff
@@ -86,7 +87,7 @@ Feature: Authentication Admin Positive
       | full_name      | occupation | birth_date | gender | phone_number | address       | image_url |
       | randomFullname | posision   | 25/04/2002 | gender | 85171212504  | randomAddress | imageUrl  |
     And Admin verify status code is 200
-#    Then Admin verify response is match with json schema "adminCreate&UpdateStaff.json"
+    Then Admin verify response is match with json schema "adminCreate&UpdateStaff.json"
 
   @Inventron @Auth @Admin @AdminAuth @UpdateStaffById
   Scenario: Admin update staff with idendity in API Inventron
@@ -96,11 +97,11 @@ Feature: Authentication Admin Positive
     And Admin verify status code is 200
     Then Admin verify response is match with json schema "authlogin.json"
     Then Admin admin get auth token
-    Given Admin admin want call an api "/admin/staff/11" with method "PUT" with payload below
+    Given Admin admin want call an api "/admin/staff/1" with method "PUT" with payload below
       | full_name      | occupation | birth_date | gender | phone_number | address       |
       | randomFullname | posision   | 25/04/2002 | gender | 85171212504  | randomAddress |
     And Admin verify status code is 200
-#    Then Admin verify response is match with json schema "adminCreate&UpdateStaff.json"
+    Then Admin verify response is match with json schema "adminCreate&UpdateStaff.json"
 
 
     #automate ganti id

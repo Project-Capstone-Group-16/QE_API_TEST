@@ -5,6 +5,7 @@ import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
+import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import net.serenitybdd.rest.SerenityRest;
 import net.serenitybdd.screenplay.Actor;
@@ -16,6 +17,7 @@ import starter.data.ID;
 import starter.data.Jabatan;
 import starter.data.User;
 
+import javax.swing.*;
 import java.io.File;
 import java.util.List;
 import java.util.Locale;
@@ -320,10 +322,14 @@ public class APIStepDefinitions {
 
         Response response = SerenityRest.lastResponse();
 
+        JsonPath jsonPath = new JsonPath(response.asString());
+
+        int zip = jsonPath.getInt("data[0].id");
+
         switch (type){
             case "warehouse" -> {
                 actor.attemptsTo(Get.resource(pathWarehouse).with(request -> request.header("Authorization", "Bearer " + admin.getAuth())));
-                id.setIdWarehouse(response.path("data.token"));
+                id.setIdWarehouse(response.path(String.valueOf(zip)));
                 System.out.println(id.getIdWarehouse());
             }
             case "staff" -> {
