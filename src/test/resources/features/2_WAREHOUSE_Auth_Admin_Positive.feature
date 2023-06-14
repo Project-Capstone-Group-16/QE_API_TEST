@@ -115,9 +115,5 @@ Feature: Authentication Admin Positive
 #    And Admin verify response is match with json schema "getAllWarehouse.json"
 
 
-
-
-
-
     #automate ganti id
   # fixing json schema
