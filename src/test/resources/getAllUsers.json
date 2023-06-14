@@ -1,0 +1,55 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "message": {
+      "type": "string"
+    },
+    "data": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "fullname": {
+            "type": "string"
+          },
+          "birth_date": {
+            "type": "null"
+          },
+          "phone_number": {
+            "type": "string"
+          },
+          "address": {
+            "type": "string"
+          },
+          "gender": {
+            "type": "string"
+          },
+          "transaction_histroies": {
+            "type": "integer"
+          },
+          "image_url": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "fullname",
+          "birth_date",
+          "phone_number",
+          "address",
+          "gender",
+          "transaction_histroies",
+          "image_url"
+        ]
+      }
+    }
+  },
+  "required": [
+    "message",
+    "data"
+  ]
+}
