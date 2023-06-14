@@ -17,7 +17,6 @@ import starter.data.ID;
 import starter.data.Jabatan;
 import starter.data.User;
 
-import javax.swing.*;
 import java.io.File;
 import java.util.List;
 import java.util.Locale;
@@ -38,8 +37,6 @@ public class APIStepDefinitions {
     @Given("{actor} user want call an api {string} with method {string} with payload below")
     public void callApiAsUserPayload(Actor actor, String path, String method, DataTable table) {
         actor.whoCan(CallAnApi.at(baseURL));
-
-        String image_url = "/src/test/resources/img/warehouse.jpg";
 
         // Create request body json instance
         JSONObject bodyRequest = new JSONObject();
@@ -88,7 +85,7 @@ public class APIStepDefinitions {
                     bodyRequest.put(key, randomAddress);
                 }
                 case "imageUrl" -> {
-                    String imageUrl = image_url;
+                    String imageUrl = faker.internet().avatar();
                     bodyRequest.put(key, imageUrl);
                 }
                 case "favoriteWarehouse" ->{
@@ -103,23 +100,15 @@ public class APIStepDefinitions {
         }
 
         switch (method) {
-            case "GET":
-                actor.attemptsTo(Get.resource(path));
-                break;
-            case "POST":
-                actor.attemptsTo(Post.to(path).with(request -> request.header("Authorization", "Bearer " + user.getAuth()).body(bodyRequest).log().all()));
-                break;
-            case "PATCH":
-                actor.attemptsTo(Patch.to(path));
-                break;
-            case "PUT":
-                actor.attemptsTo(Put.to(path).with(request -> request.header("Authorization", "Bearer " + user.getAuth()).body(bodyRequest).log().all()));
-                break;
-            case "DELETE":
-                actor.attemptsTo(Delete.from(path));
-                break;
-            default:
-                throw new IllegalStateException("Unknown method");
+            case "GET" ->
+                    actor.attemptsTo(Get.resource(path).with(request -> request.header("Authorization", "Bearer " + user.getAuth())));
+            case "POST" ->
+                    actor.attemptsTo(Post.to(path).with(request -> request.header("Authorization", "Bearer " + user.getAuth()).body(bodyRequest)));
+            case "PATCH" -> actor.attemptsTo(Patch.to(path));
+            case "PUT" ->
+                    actor.attemptsTo(Put.to(path).with(request -> request.header("Authorization", "Bearer " + user.getAuth()).body(bodyRequest)));
+            case "DELETE" -> actor.attemptsTo(Delete.from(path));
+            default -> throw new IllegalStateException("Unknown method");
         }
     }
 
@@ -128,23 +117,13 @@ public class APIStepDefinitions {
         actor.whoCan(CallAnApi.at(baseURL));
 
         switch (method) {
-            case "GET":
-                actor.attemptsTo(Get.resource(path));
-                break;
-            case "POST":
-                actor.attemptsTo(Post.to(path));
-                break;
-            case "PUT":
-                actor.attemptsTo(Put.to(path));
-                break;
-            case "PATCH":
-                actor.attemptsTo(Patch.to(path));
-                break;
-            case "DELETE":
-                actor.attemptsTo(Delete.from(path));
-                break;
-            default:
-                throw new IllegalStateException("Unknown method");
+            case "GET" ->
+                    actor.attemptsTo(Get.resource(path).with(request -> request.header("Authorization", "Bearer " + user.getAuth())));
+            case "POST" -> actor.attemptsTo(Post.to(path));
+            case "PUT" -> actor.attemptsTo(Put.to(path));
+            case "PATCH" -> actor.attemptsTo(Patch.to(path));
+            case "DELETE" -> actor.attemptsTo(Delete.from(path));
+            default -> throw new IllegalStateException("Unknown method");
         }
     }
 
@@ -166,10 +145,6 @@ public class APIStepDefinitions {
         // Loop on every values and set value with key from header to request body
         for (int i = 0; i < valueList.size(); i++) {
             Faker faker = new Faker(new Locale("in-ID"));
-
-
-            File file = new File(System.getProperty("user.dir") + "/src/test/resources/img/warehouse.jpg");
-            String imgUrl = String.valueOf(file);
 
 
             String key = headerList.get(i);
@@ -341,6 +316,24 @@ public class APIStepDefinitions {
 
     }
 
+    @Given("{actor} want make transaction path {string} with method {string}")
+    public void userWantMakeTransactionPathWithMethod(Actor actor, String path, String method) {
+        actor.whoCan(CallAnApi.at(baseURL));
+
+        JSONObject bodyrequest = new JSONObject();
+
+        bodyrequest.put("warehouse_id", 1);
+        bodyrequest.put("locker_type_id", 3);
+        bodyrequest.put("item_category_id", 1);
+        bodyrequest.put("start_date", "13/06/2023");
+        bodyrequest.put("end_date", "23/06/2023");
+
+        if (method.equals("POST")) {
+            actor.attemptsTo(Post.to(path).with(request -> request.header("Authorization", "Bearer " + user.getAuth()).body(bodyrequest)));
+        } else {
+            throw new IllegalStateException("Unknown method");
+        }
+    }
 }
 
 
