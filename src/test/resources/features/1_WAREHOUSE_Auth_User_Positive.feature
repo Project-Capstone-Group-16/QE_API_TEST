@@ -63,6 +63,19 @@ Feature: Authentication User Positive
     Then User user get auth token
     Then User verify response is match with json schema "authlogin.json"
 
+  @Inventron @User @RecommendedWarehouse
+  Scenario: User create favorite warehouse
+    Given User user want call an api "/login" with method "POST" with payload below
+      | email     | password     |
+      | userEmail | userPassword |
+    And User verify status code is 200
+    And User user get auth token
+    Then User verify response is match with json schema "authlogin.json"
+    Then User user call an api "/warehouse/recomended" with method "GET"
+    And User verify status code is 200
+    Then User verify response is match with json schema "getAllWarehouse.json"
+
+
   @Inventron @User @FavoriteWarehouse
   Scenario: User create favorite warehouse
     Given User user want call an api "/login" with method "POST" with payload below
@@ -84,6 +97,18 @@ Feature: Authentication User Positive
     Then User verify response is match with json schema "authlogin.json"
     Given User user want call an api "/profile/update" with method "PUT" with payload below
       | first_name      | last_name      | birth_date | gender | phone_number | address       | image_url |
-      | randomFirstname | randomLastname | 25/04/2002 | PRIA   | 85591717699  | randomAddress | imageUrl  |
+      | randomFirstname | randomLastname | 25/04/2002 | gender | 85591717699  | randomAddress | imageUrl  |
+    And User verify status code is 200
+    Then User verify response is match with json schema "userUpdateProfile.json"
+
+  @Inventron @User @CreateTransaction
+  Scenario: User create transaction
+    Given User user want call an api "/login" with method "POST" with payload below
+      | email     | password     |
+      | userEmail | userPassword |
+    Then User verify status code is 200
+    Then User user get auth token
+    Then User verify response is match with json schema "authlogin.json"
+    Given User want make transaction path "/warehouse/favorite" with method "POST"
     And User verify status code is 200
     Then User verify response is match with json schema "userUpdateProfile.json"

@@ -61,7 +61,6 @@ Feature: Authentication Admin Positive
     Then Admin admin get auth token
     Given Admin admin call api "/admin/warehouse" with method "GET"
     And Admin verify status code is 200
-    And Admin automate get id "warehouse"
     And Admin verify response is match with json schema "getAllWarehouse.json"
 
   @Inventron @Auth @Admin @AdminAuth @AdminDeleteWarehouseById
@@ -102,6 +101,22 @@ Feature: Authentication Admin Positive
       | randomFullname | posision   | 25/04/2002 | gender | 85171212504  | randomAddress |
     And Admin verify status code is 200
     Then Admin verify response is match with json schema "adminCreate&UpdateStaff.json"
+
+  @Inventron @Auth @Admin @AdminAuth @AdminGetAllLockerLarge
+  Scenario: Admin get all locker large in API Inventron
+    Given Admin admin want call an api "/login/admin" with method "POST" with payload below
+      | email      | password      |
+      | adminEmail | adminPassword |
+    And Admin verify status code is 200
+    And Admin verify response is match with json schema "authlogin.json"
+    Then Admin admin get auth token
+    Given Admin admin call api "/admin/locker/large/1" with method "GET"
+    And Admin verify status code is 200
+#    And Admin verify response is match with json schema "getAllWarehouse.json"
+
+
+
+
 
 
     #automate ganti id
