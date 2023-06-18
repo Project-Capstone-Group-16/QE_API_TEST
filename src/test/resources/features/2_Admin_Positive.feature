@@ -185,11 +185,6 @@ Feature: Admin Feature Positive
     And Admin verify status code is 200
 
 
-
-
-
-
-#
 # And Admin verify response is match with json schema "getAllWarehouse.json"
     #automate ganti id
   # fixing json schema
