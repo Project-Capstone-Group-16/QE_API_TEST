@@ -49,6 +49,27 @@ Feature: User Feature Positive
     And User verify status code is 200
     Then User verify response is match with json schema "userUpdateProfile.json"
 
-#    Get Favorite
 
-#    Get Transaction
+  @Inventron @Auth @User @GetFavorite
+  Scenario: User GET all transaction in inventron
+    Given User user want call an api "/login" with method "GET" with payload below
+      | email     | password     |
+      | userEmail | userPassword |
+    And User verify status code is 200
+    Then User verify response is match with json schema "authlogin.json"
+    Then User admin get auth token
+    Given User admin call api "/profile/favorite" with method "GET"
+    And User verify status code is 200
+    Then User verify response is match with json schema "userGetFavorite.json"
+
+  @Inventron @Auth @User @GetTransaction
+  Scenario: User GET all transaction in inventron
+    Given User user want call an api "/login" with method "GET" with payload below
+      | email     | password     |
+      | userEmail | userPassword |
+    And User verify status code is 200
+    Then User verify response is match with json schema "userGetProfile.json"
+    Then User admin get auth token
+    Given User admin call api "/profile/transaction" with method "GET"
+    And User verify status code is 200
+    Then User verify response is match with json schema "userGetTransaction.json"
