@@ -144,7 +144,34 @@ Feature: Admin Feature Positive
     Then Admin admin get auth token
     Given Admin admin call api "/admin/locker/large/1" with method "GET"
     And Admin verify status code is 200
-#    And Admin verify response is match with json schema "getAllWarehouse.json"
+
+  @Inventron @Auth @Admin @AdminAuth @AdminGetAllLockerSmall
+  Scenario: Admin Get All Locker Medium in Inventron
+    Given Admin admin want call an api "/admin/locker/small/1" with method "GET" with payload below
+      | email      | password      |
+      | adminEmail | adminPassword |
+    And Admin verify status code is 200
+    Then Admin verify response is match with json schema "authlogin.json"
+    Then Admin admin get auth token
+    Given Admin admin call api "/admin/locker/small/1" with method "GET"
+    And Admin verify status code is 200
+    Then Admin verify response is match with json schema "getAllLockers.json"
+
+  @Inventron @Auth @Admin @AdminAuth @AdminGetAllLockerMedium
+  Scenario: Admin Get All Locker Medium in Inventron
+    Given Admin admin want call an api "/admin/locker/medium/1" with method "GET" with payload below
+      | email      | password      |
+      | adminEmail | adminPassword |
+    And Admin verify status code is 200
+    Then Admin verify response is match with json schema "authlogin.json"
+    Then Admin admin get auth token
+    Given Admin admin call api "/admin/locker/medium/1" with method "GET"
+    And Admin verify status code is 200
+    Then Admin verify response is match with json schema "getAllLockers.json"
+
+
+#
+# And Admin verify response is match with json schema "getAllWarehouse.json"
     #automate ganti id
   # fixing json schema
 
