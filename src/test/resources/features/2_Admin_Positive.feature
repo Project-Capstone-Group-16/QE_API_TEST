@@ -152,7 +152,7 @@ Feature: Admin Feature Positive
     Then Admin verify response is match with json schema "getAllLockers.json"
 
   @Inventron @Auth @Admin @AdminAuth @AdminGetAllLockerSmall
-  Scenario: Admin Get All Locker Medium in Inventron
+  Scenario: Admin Get All Locker Small in Inventron
     Given Admin admin want call an api "/login/admin" with method "GET" with payload below
       | email      | password      |
       | adminEmail | adminPassword |
@@ -184,7 +184,7 @@ Feature: Admin Feature Positive
     Given Admin admin call api "/admin/locker/large/1" with method "GET"
     And Admin verify status code is 200
 
-
+\\ comment
 # And Admin verify response is match with json schema "getAllWarehouse.json"
     #automate ganti id
   # fixing json schema
