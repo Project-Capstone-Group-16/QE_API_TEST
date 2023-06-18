@@ -184,7 +184,6 @@ Feature: Admin Feature Positive
     Given Admin admin call api "/admin/locker/large/1" with method "GET"
     And Admin verify status code is 200
 
-\\ comment
 # And Admin verify response is match with json schema "getAllWarehouse.json"
     #automate ganti id
   # fixing json schema
