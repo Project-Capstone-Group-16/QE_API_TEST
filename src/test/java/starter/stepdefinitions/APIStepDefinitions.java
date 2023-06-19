@@ -336,18 +336,34 @@ public class APIStepDefinitions {
     }
 
     @Given("{actor} want GET all small locker {string} with method {string}")
-    public void UserWantGETalllockersmall(@NotNull Actor actor, String path, String method) {
+    public void UserWantGETalllockersmall(Actor actor, String path, String method) {
         actor.whoCan(CallAnApi.at(baseURL));
         Actor.attemptsTo(Get.resource(path).with(request -> request.header("Authorization", "Bearer " + admin.getAuth())));
         JSONObject bodyrequest = new JSONObject();
     }
 
     @Given("{actor} want GET all medium locker {string} with method {string}")
-    public void UserWantGETalllockermedium(@NotNull Actor actor, String path, String method) {
+    public void UserWantGETalllockermedium(Actor actor, String path, String method) {
         actor.whoCan(CallAnApi.at(baseURL));
         Actor.attemptsTo(Get.resource(path).with(request -> request.header("Authorization", "Bearer " + admin.getAuth())));
         JSONObject bodyrequest = new JSONObject();
     }
+
+
+    @Given("{actor} GET favorite in inventron {string} with method {string}")
+    public void UserWantGETfavoriteInInventron(Actor actor, String path, String method) {
+        actor.whoCan(CallAnApi.at(baseURL));
+        Actor.attemptsTo(Get.resource(path).with(request -> request.header("Authorization", "Bearer " + admin.getAuth())));
+        JSONObject bodyrequest = new JSONObject();
+    }
+
+    @Given("{actor} GET all transaction in inventron {string} with method {string}")
+    public void UserWantGETallTransaction(Actor actor, String path, String method) {
+        actor.whoCan(CallAnApi.at(baseURL));
+        Actor.attemptsTo(Get.resource(path).with(request -> request.header("Authorization", "Bearer " + admin.getAuth())));
+        JSONObject bodyrequest = new JSONObject();
+    }
+
 
 }
 

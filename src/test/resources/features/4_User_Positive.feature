@@ -51,7 +51,7 @@ Feature: User Feature Positive
 
 
   @Inventron @Auth @User @GetFavorite
-  Scenario: User GET all transaction in inventron
+  Scenario: User GET favorite in inventron
     Given User user want call an api "/login" with method "POST" with payload below
       | email     | password     |
       | userEmail | userPassword |
@@ -68,7 +68,7 @@ Feature: User Feature Positive
       | email     | password     |
       | userEmail | userPassword |
     And User verify status code is 200
-    Then User verify response is match with json schema "userGetProfile.json"
+    Then User verify response is match with json schema "authlogin.json"
     Then User admin get auth token
     Given User admin call api "/profile/transaction" with method "GET"
     And User verify status code is 200
