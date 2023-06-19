@@ -153,7 +153,7 @@ Feature: Admin Feature Positive
 
   @Inventron @Auth @Admin @AdminAuth @AdminGetAllLockerSmall
   Scenario: Admin Get All Locker Small in Inventron
-    Given Admin admin want call an api "/login/admin" with method "GET" with payload below
+    Given Admin admin want call an api "/login/admin" with method "POST" with payload below
       | email      | password      |
       | adminEmail | adminPassword |
     And Admin verify status code is 200
@@ -164,7 +164,7 @@ Feature: Admin Feature Positive
 
   @Inventron @Auth @Admin @AdminAuth @AdminGetAllLockerMedium
   Scenario: Admin Get All Locker Medium in Inventron
-    Given Admin admin want call an api "/login/admin" with method "GET" with payload below
+    Given Admin admin want call an api "/login/admin" with method "POST" with payload below
       | email      | password      |
       | adminEmail | adminPassword |
     And Admin verify status code is 200
