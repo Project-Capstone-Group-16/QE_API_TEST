@@ -364,7 +364,6 @@ public class APIStepDefinitions {
         JSONObject bodyrequest = new JSONObject();
     }
 
-
 }
 
 // @Given("{actor} admin call api {string} with method {string}")
