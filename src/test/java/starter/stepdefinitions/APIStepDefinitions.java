@@ -11,6 +11,7 @@ import net.serenitybdd.rest.SerenityRest;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.rest.abilities.CallAnApi;
 import net.serenitybdd.screenplay.rest.interactions.*;
+import org.jetbrains.annotations.NotNull;
 import org.json.simple.JSONObject;
 import starter.data.Admin;
 import starter.data.ID;
@@ -335,17 +336,19 @@ public class APIStepDefinitions {
     }
 
     @Given("{actor} want GET all small locker {string} with method {string}")
-    public void UserWantGETalllockersmall(Actor actor, String path, String method) {
+    public void UserWantGETalllockersmall(@NotNull Actor actor, String path, String method) {
         actor.whoCan(CallAnApi.at(baseURL));
         Actor.attemptsTo(Get.resource(path).with(request -> request.header("Authorization", "Bearer " + admin.getAuth())));
         JSONObject bodyrequest = new JSONObject();
     }
-    Given("{actor} want GET all medium locker {string} with method {string}")
-    public void UserWantGETalllockermedium(Actor actor, String path, String method) {
+
+    @Given("{actor} want GET all medium locker {string} with method {string}")
+    public void UserWantGETalllockermedium(@NotNull Actor actor, String path, String method) {
         actor.whoCan(CallAnApi.at(baseURL));
         Actor.attemptsTo(Get.resource(path).with(request -> request.header("Authorization", "Bearer " + admin.getAuth())));
         JSONObject bodyrequest = new JSONObject();
     }
+
 }
 
 // @Given("{actor} admin call api {string} with method {string}")
