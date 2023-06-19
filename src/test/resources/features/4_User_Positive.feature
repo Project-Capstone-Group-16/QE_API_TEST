@@ -52,7 +52,7 @@ Feature: User Feature Positive
 
   @Inventron @Auth @User @GetFavorite
   Scenario: User GET all transaction in inventron
-    Given User user want call an api "/login" with method "GET" with payload below
+    Given User user want call an api "/login" with method "POST" with payload below
       | email     | password     |
       | userEmail | userPassword |
     And User verify status code is 200
@@ -64,7 +64,7 @@ Feature: User Feature Positive
 
   @Inventron @Auth @User @GetTransaction
   Scenario: User GET all transaction in inventron
-    Given User user want call an api "/login" with method "GET" with payload below
+    Given User user want call an api "/login" with method "POST" with payload below
       | email     | password     |
       | userEmail | userPassword |
     And User verify status code is 200
