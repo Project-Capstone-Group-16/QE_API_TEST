@@ -88,7 +88,7 @@ public class APIStepDefinitions {
                     String imageUrl = faker.internet().avatar();
                     bodyRequest.put(key, imageUrl);
                 }
-                case "favoriteWarehouse" ->{
+                case "favoriteWarehouse" -> {
                     int favoriteWarehouse = 1;
                     bodyRequest.put(key, favoriteWarehouse);
                 }
@@ -183,8 +183,7 @@ public class APIStepDefinitions {
                     bodyRequest.put(key, "Inventron " + location);
                     admin.setLocation(location);
                 }
-                case "cityWarehouse" ->
-                    bodyRequest.put(key, admin.getLocation());
+                case "cityWarehouse" -> bodyRequest.put(key, admin.getLocation());
 
                 case "descriptionWarehouse" -> {
                     String description = faker.lorem().sentence();
@@ -274,7 +273,7 @@ public class APIStepDefinitions {
     }
 
     @Given("{actor} want favorite warehouse path {string} with method {string}")
-    public void userWantFavoriteWarehouseWithMethod(Actor actor,String path, String method) {
+    public void userWantFavoriteWarehouseWithMethod(Actor actor, String path, String method) {
         actor.whoCan(CallAnApi.at(baseURL));
 
         JSONObject bodyrequest = new JSONObject();
@@ -301,7 +300,7 @@ public class APIStepDefinitions {
 
         int zip = jsonPath.getInt("data[0].id");
 
-        switch (type){
+        switch (type) {
             case "warehouse" -> {
                 actor.attemptsTo(Get.resource(pathWarehouse).with(request -> request.header("Authorization", "Bearer " + admin.getAuth())));
                 id.setIdWarehouse(response.path(String.valueOf(zip)));
@@ -317,7 +316,7 @@ public class APIStepDefinitions {
     }
 
     @Given("{actor} want make transaction path {string} with method {string}")
-    public void userWantMakeTransactionPathWithMethod(Actor actor, String path, String method) {
+    public void guserWantMakeTransactionPathWithMethod(Actor actor, String path, String method) {
         actor.whoCan(CallAnApi.at(baseURL));
 
         JSONObject bodyrequest = new JSONObject();
@@ -334,10 +333,22 @@ public class APIStepDefinitions {
             throw new IllegalStateException("Unknown method");
         }
     }
+
+    @Given("{actor} want GET all small locker {string} with method {string}")
+    public void UserWantGETalllockersmall(Actor actor, String path, String method) {
+        actor.whoCan(CallAnApi.at(baseURL));
+        Actor.attemptsTo(Get.resource(path).with(request -> request.header("Authorization", "Bearer " + admin.getAuth())));
+        JSONObject bodyrequest = new JSONObject();
+    }
+    Given("{actor} want GET all medium locker {string} with method {string}")
+    public void UserWantGETalllockermedium(Actor actor, String path, String method) {
+        actor.whoCan(CallAnApi.at(baseURL));
+        Actor.attemptsTo(Get.resource(path).with(request -> request.header("Authorization", "Bearer " + admin.getAuth())));
+        JSONObject bodyrequest = new JSONObject();
+    }
 }
 
-
-//@Given("{actor} admin call api {string} with method {string}")
+// @Given("{actor} admin call api {string} with method {string}")
 //    public void userCallApiWithMethod(Actor actor, String path, String method) {
 //        actor.whoCan(CallAnApi.at(baseURL));
 //
