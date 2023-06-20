@@ -8,19 +8,19 @@
     "data": {
       "type": "object",
       "properties": {
-        "first_name": {
+        "name": {
           "type": "string"
         },
-        "last_name": {
+        "city": {
           "type": "string"
         },
-        "email": {
+        "province": {
           "type": "string"
         },
-        "phone_number": {
+        "status": {
           "type": "string"
         },
-        "password": {
+        "image_url": {
           "type": "string"
         }
       }

@@ -1,0 +1,151 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "message": {
+      "type": "string"
+    },
+    "data": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "ID": {
+            "type": "integer"
+          },
+          "CreatedAt": {
+            "type": "string"
+          },
+          "UpdatedAt": {
+            "type": "string"
+          },
+          "DeletedAt": {
+            "type": "null"
+          },
+          "warehouse_id": {
+            "type": "integer"
+          },
+          "locker_type_id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "locker_number": {
+            "type": "integer"
+          },
+          "availability": {
+            "type": "string"
+          },
+          "Warehouse": {
+            "type": "object",
+            "properties": {
+              "ID": {
+                "type": "integer"
+              },
+              "CreatedAt": {
+                "type": "string"
+              },
+              "UpdatedAt": {
+                "type": "string"
+              },
+              "DeletedAt": {
+                "type": "null"
+              },
+              "name": {
+                "type": "string"
+              },
+              "city": {
+                "type": "string"
+              },
+              "address": {
+                "type": "string"
+              },
+              "capacity": {
+                "type": "integer"
+              },
+              "status": {
+                "type": "string"
+              },
+              "favorites": {
+                "type": "integer"
+              },
+              "description": {
+                "type": "string"
+              },
+              "image_url": {
+                "type": "string"
+              },
+              "Locker": {
+                "type": "null"
+              }
+            },
+            "required": [
+              "ID",
+              "CreatedAt",
+              "UpdatedAt",
+              "DeletedAt",
+              "name",
+              "city",
+              "address",
+              "capacity",
+              "status",
+              "favorites",
+              "description",
+              "image_url",
+              "Locker"
+            ]
+          },
+          "LockerType": {
+            "type": "object",
+            "properties": {
+              "ID": {
+                "type": "integer"
+              },
+              "CreatedAt": {
+                "type": "string"
+              },
+              "UpdatedAt": {
+                "type": "string"
+              },
+              "DeletedAt": {
+                "type": "null"
+              },
+              "name": {
+                "type": "string"
+              },
+              "price": {
+                "type": "integer"
+              }
+            },
+            "required": [
+              "ID",
+              "CreatedAt",
+              "UpdatedAt",
+              "DeletedAt",
+              "name",
+              "price"
+            ]
+          }
+        },
+        "required": [
+          "ID",
+          "CreatedAt",
+          "UpdatedAt",
+          "DeletedAt",
+          "warehouse_id",
+          "locker_type_id",
+          "name",
+          "locker_number",
+          "availability",
+          "Warehouse",
+          "LockerType"
+        ]
+      }
+    }
+  },
+  "required": [
+    "message",
+    "data"
+  ]
+}

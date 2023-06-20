@@ -8,13 +8,22 @@
     "data": {
       "type": "object",
       "properties": {
-        "name": {
+        "first_name": {
           "type": "string"
         },
-        "location": {
+        "last_name": {
           "type": "string"
         },
-        "status": {
+        "birth_date": {
+          "type": "string"
+        },
+        "gender": {
+          "type": "string"
+        },
+        "phone_number": {
+          "type": "string"
+        },
+        "address": {
           "type": "string"
         },
         "image_url": {
@@ -22,9 +31,12 @@
         }
       },
       "required": [
-        "name",
-        "location",
-        "status",
+        "first_name",
+        "last_name",
+        "birth_date",
+        "gender",
+        "phone_number",
+        "address",
         "image_url"
       ]
     }

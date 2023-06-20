@@ -16,10 +16,22 @@
           "name": {
             "type": "string"
           },
-          "location": {
+          "city": {
+            "type": "string"
+          },
+          "address": {
             "type": "string"
           },
           "status": {
+            "type": "string"
+          },
+          "capacity": {
+            "type": "integer"
+          },
+          "favorite": {
+            "type": "integer"
+          },
+          "description": {
             "type": "string"
           },
           "image_url": {
@@ -29,8 +41,12 @@
         "required": [
           "id",
           "name",
-          "location",
+          "city",
+          "address",
           "status",
+          "capacity",
+          "favorite",
+          "description",
           "image_url"
         ]
       }
