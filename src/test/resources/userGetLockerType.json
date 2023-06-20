@@ -1,0 +1,48 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "message": {
+      "type": "string"
+    },
+    "data": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "ID": {
+            "type": "integer"
+          },
+          "CreatedAt": {
+            "type": "string"
+          },
+          "UpdatedAt": {
+            "type": "string"
+          },
+          "DeletedAt": {
+            "type": "null"
+          },
+          "name": {
+            "type": "string"
+          },
+          "price": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "ID",
+          "CreatedAt",
+          "UpdatedAt",
+          "DeletedAt",
+          "name",
+          "price"
+        ]
+      },
+      "additionalItems": true
+    }
+  },
+  "required": [
+    "message",
+    "data"
+  ]
+}

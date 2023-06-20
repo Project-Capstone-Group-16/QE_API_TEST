@@ -190,6 +190,27 @@ Feature: Admin Feature Positive
   # fixing json schema
 
 
-#     Get Dashboard
+  @Inventron @Auth @Admin @AdminAuth @AdminGetDashboard
+  Scenario: Admin get dashboard  in API Inventron
+    Given Admin admin want call an api "/login/admin" with method "POST" with payload below
+      | email      | password      |
+      | adminEmail | adminPassword |
+    And Admin verify status code is 200
+    And Admin verify response is match with json schema "authlogin.json"
+    Then Admin admin get auth token
+    Given Admin admin call api "/admin/dashboard" with method "GET"
+    And Admin verify status code is 200
+    Then Admin verify response is match with json schema "adminGetDashboard.json"
 
-#     Get All Transaction
+
+  @Inventron @Auth @Admin @AdminAuth @AdminGetAllTransaction
+  Scenario: Admin get all transaction in API Inventron
+    Given Admin admin want call an api "/login/admin" with method "POST" with payload below
+      | email      | password      |
+      | adminEmail | adminPassword |
+    And Admin verify status code is 200
+    And Admin verify response is match with json schema "authlogin.json"
+    Then Admin admin get auth token
+    Given Admin admin call api "/admin/transactions" with method "GET"
+    And Admin verify status code is 200
+    Then Admin verify response is match with json schema "adminGetAllTransaction.json"

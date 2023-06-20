@@ -73,3 +73,15 @@ Feature: User Feature Positive
     Given User admin call api "/profile/transaction" with method "GET"
     And User verify status code is 200
     Then User verify response is match with json schema "userGetTransaction.json"
+
+  @Inventron @User @Auth @UserGetExplore
+  Scenario: User get data explore on api
+    Given User user want call an api "/login" with method "POST" with payload below
+      | email     | password     |
+      | userEmail | userPassword |
+    Then User verify status code is 200
+    Then User user get auth token
+    Then User verify response is match with json schema "authlogin.json"
+    Given User user call an api "/explore" with method "GET"
+    And User verify status code is 200
+    Then User verify response is match with json schema "userGetExplore.json"
