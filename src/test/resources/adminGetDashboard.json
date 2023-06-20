@@ -1,0 +1,29 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "message": {
+      "type": "string"
+    },
+    "data": {
+      "type": "object",
+      "properties": {
+        "todey": {
+          "type": "string"
+        },
+        "total_lockers": {
+          "type": "integer"
+        },
+        "total_used_lockers": {
+          "type": "integer"
+        },
+        "total_users": {
+          "type": "integer"
+        },
+        "total_income": {
+          "type": "integer"
+        }
+      }
+    }
+  }
+}
