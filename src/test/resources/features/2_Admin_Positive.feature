@@ -44,8 +44,7 @@ Feature: Admin Feature Positive
     And Admin verify status code is 200
     And Admin verify response is match with json schema "authlogin.json"
     Then Admin admin get auth token
-#    And Admin automate get id "warehouse"
-    Given Admin admin want call an api "/admin/warehouse/11" with method "PUT" with payload below
+    Given Admin admin want call an api "/admin/warehouse/9" with method "PUT" with payload below
       | name          | city          | address       | description          | status    | image_url |
       | nameWarehouse | cityWarehouse | randomAddress | descriptionWarehouse | Available | imageUrl  |
     And Admin verify status code is 200
@@ -71,7 +70,7 @@ Feature: Admin Feature Positive
     And Admin verify status code is 200
     And Admin verify response is match with json schema "authlogin.json"
     Then Admin admin get auth token
-    Given Admin admin call api "/admin/warehouse/10" with method "DELETE"
+    Given Admin admin call api "/admin/warehouse/8" with method "DELETE"
     Then Admin verify status code is 200
 
   @Inventron @Auth @Admin @AdminAuth @CreateStaff
@@ -96,7 +95,7 @@ Feature: Admin Feature Positive
     And Admin verify status code is 200
     Then Admin verify response is match with json schema "authlogin.json"
     Then Admin admin get auth token
-    Given Admin admin want call an api "/admin/staff/1" with method "PUT" with payload below
+    Given Admin admin want call an api "/admin/staff/9" with method "PUT" with payload below
       | full_name      | occupation | birth_date | gender | phone_number | address       | image_url |
       | randomFullname | posision   | 25/04/2002 | gender | 85171212504  | randomAddress | imageUrl  |
     And Admin verify status code is 200
@@ -105,19 +104,19 @@ Feature: Admin Feature Positive
 
   @Inventron @Auth @Admin @AdminAuth @AdminDeleteStaffByID
   Scenario: Admin delete warehouse by id in API Inventron
-    Given Admin admin want call an api "/login/admin" with method "DELETE" with payload below
+    Given Admin admin want call an api "/login/admin" with method "POST" with payload below
       | email      | password      |
       | adminEmail | adminPassword |
     And Admin verify status code is 200
-    And Admin verify response is match with json schema "AdminDeleteStaff.json"
+    And Admin verify response is match with json schema "authlogin.json"
     Then Admin admin get auth token
-    Given Admin admin call api "/admin/staff/1" with method "DELETE"
+    Given Admin admin call api "/admin/staff/3" with method "DELETE"
     Then Admin verify status code is 200
 
 
   @Inventron @Auth @Admin @AdminAuth @GetALlStaff
   Scenario: Admin Get All User in Inventron
-    Given Admin admin want call an api "/login/admin" with method "GET" with payload below
+    Given Admin admin want call an api "/login/admin" with method "POST" with payload below
       | email      | password      |
       | adminEmail | adminPassword |
     And Admin verify status code is 200
@@ -125,7 +124,7 @@ Feature: Admin Feature Positive
     Then Admin admin get auth token
     Given Admin admin call api "/admin/staff" with method "GET"
     And Admin verify status code is 200
-    Then Admin verify response is match with json schema "getAllUsers.json"
+    Then Admin verify response is match with json schema "getAllStaff.json"
 
   @Inventron @Auth @Admin @AdminAuth @GetAllUsers
   Scenario: Admin Get All User in Inventron
@@ -151,9 +150,9 @@ Feature: Admin Feature Positive
     And Admin verify status code is 200
     Then Admin verify response is match with json schema "getAllLockers.json"
 
-  @Inventron @Auth @Admin @AdminAuth @AdminGetAllLockerSmall
+  @Inventron @Auth @Admin @AdminAuth @Locker @AdminGetAllLockerSmall
   Scenario: Admin Get All Locker Medium in Inventron
-    Given Admin admin want call an api "/login/admin" with method "GET" with payload below
+    Given Admin admin want call an api "/login/admin" with method "POST" with payload below
       | email      | password      |
       | adminEmail | adminPassword |
     And Admin verify status code is 200
@@ -161,10 +160,11 @@ Feature: Admin Feature Positive
     Then Admin admin get auth token
     Given Admin admin call api "/admin/locker/small/1" with method "GET"
     And Admin verify status code is 200
+    Then Admin verify response is match with json schema "getLokcerSML.json"
 
-  @Inventron @Auth @Admin @AdminAuth @AdminGetAllLockerMedium
+  @Inventron @Auth @Admin @AdminAuth @Locker @AdminGetAllLockerMedium
   Scenario: Admin Get All Locker Medium in Inventron
-    Given Admin admin want call an api "/login/admin" with method "GET" with payload below
+    Given Admin admin want call an api "/login/admin" with method "POST" with payload below
       | email      | password      |
       | adminEmail | adminPassword |
     And Admin verify status code is 200
@@ -172,8 +172,9 @@ Feature: Admin Feature Positive
     Then Admin admin get auth token
     Given Admin admin call api "/admin/locker/medium/1" with method "GET"
     And Admin verify status code is 200
+    Then Admin verify response is match with json schema "getLokcerSML.json"
 
-  @Inventron @Auth @Admin @AdminAuth @AdminGetAllLockerLarge
+  @Inventron @Auth @Admin @AdminAuth @Locker @AdminGetAllLockerLarge
   Scenario: Admin get all locker large in API Inventron
     Given Admin admin want call an api "/login/admin" with method "POST" with payload below
       | email      | password      |
@@ -183,12 +184,7 @@ Feature: Admin Feature Positive
     Then Admin admin get auth token
     Given Admin admin call api "/admin/locker/large/1" with method "GET"
     And Admin verify status code is 200
-
-
-# And Admin verify response is match with json schema "getAllWarehouse.json"
-    #automate ganti id
-  # fixing json schema
-
+    Then Admin verify response is match with json schema "getLokcerSML.json"
 
   @Inventron @Auth @Admin @AdminAuth @AdminGetDashboard
   Scenario: Admin get dashboard  in API Inventron

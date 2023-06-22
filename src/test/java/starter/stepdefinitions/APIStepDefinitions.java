@@ -200,18 +200,27 @@ public class APIStepDefinitions {
             }
         }
 
+        if (headerList.get(headerList.size()-1).equals("pathVariable")){
+            bodyRequest.remove("pathVariable");
+            if (valueList.get("pathVariable").equals("idWarehouse")){
+                path = path + "/" + id.getIdWarehouse();
+            }else{
+                path = path + "/" + valueList.get("pathVariable");
+            }
+        }
+
         switch (method) {
             case "GET":
                 actor.attemptsTo(Get.resource(path));
                 break;
             case "POST":
-                actor.attemptsTo(Post.to(path).with(request -> request.header("Authorization", "Bearer " + admin.getAuth()).body(bodyRequest).log().all()));
+                actor.attemptsTo(Post.to(path).with(request -> request.header("Authorization", "Bearer " + admin.getAuth()).body(bodyRequest)));
                 break;
             case "PATCH":
                 actor.attemptsTo(Patch.to(path));
                 break;
             case "PUT":
-                actor.attemptsTo(Put.to(path).with(request -> request.header("Authorization", "Bearer " + admin.getAuth()).body(bodyRequest).log().all()));
+                actor.attemptsTo(Put.to(path).with(request -> request.header("Authorization", "Bearer " + admin.getAuth()).body(bodyRequest)));
                 break;
             case "DELETE":
                 actor.attemptsTo(Delete.from(path));
@@ -224,6 +233,17 @@ public class APIStepDefinitions {
     @Given("{actor} admin call api {string} with method {string}")
     public void callApiAsAdmin(Actor actor, String path, String method) {
         actor.whoCan(CallAnApi.at(baseURL));
+
+//        // Create request body json instance
+//        JSONObject bodyRequest = new JSONObject();
+//
+//        // Get headers
+//        List<List<String>> rowsList = table.asLists(String.class);
+//        List<String> headerList = rowsList.get(0);
+//
+//        // Get values
+//        List<Map<String, String>> rowsMap = table.asMaps(String.class, String.class);
+//        Map<String, String> valueList = rowsMap.get(0);
 
         switch (method) {
             case "GET":
@@ -244,6 +264,16 @@ public class APIStepDefinitions {
             default:
                 throw new IllegalStateException("Unknown method");
         }
+
+//        if (headerList.get(headerList.size()-1).equals("pathVariable")){
+//            bodyRequest.remove("pathVariable");
+//            if (valueList.get("pathVariable").equals("idWarehouse")){
+//                path = path + "/" + id.getIdWarehouse();
+//            }else{
+//                path = path + "/" + valueList.get("pathVariable");
+//            }
+//        }
+
     }
 
     @Then("{actor} verify response is match with json schema {string}")
@@ -288,34 +318,6 @@ public class APIStepDefinitions {
         }
     }
 
-    @And("{actor} automate get id {string}")
-    public void adminAutomateGetId(Actor actor, String type) {
-        actor.whoCan(CallAnApi.at(baseURL));
-
-        String pathWarehouse = "/admin/warehouse";
-        String pathStaff = "/admin/staff";
-
-        Response response = SerenityRest.lastResponse();
-
-        JsonPath jsonPath = new JsonPath(response.asString());
-
-        int zip = jsonPath.getInt("data[0].id");
-
-        switch (type){
-            case "warehouse" -> {
-                actor.attemptsTo(Get.resource(pathWarehouse).with(request -> request.header("Authorization", "Bearer " + admin.getAuth())));
-                id.setIdWarehouse(response.path(String.valueOf(zip)));
-                System.out.println(id.getIdWarehouse());
-            }
-            case "staff" -> {
-                actor.attemptsTo(Get.resource(pathStaff).with(request -> request.header("Authorization", "Bearer " + admin.getAuth())));
-                id.setIdStaff(response.path("data.token"));
-                System.out.println(id.getIdStaff());
-            }
-        }
-
-    }
-
     @Given("{actor} want make transaction path {string} with method {string}")
     public void userWantMakeTransactionPathWithMethod(Actor actor, String path, String method) {
         actor.whoCan(CallAnApi.at(baseURL));
@@ -325,13 +327,24 @@ public class APIStepDefinitions {
         bodyrequest.put("warehouse_id", 1);
         bodyrequest.put("locker_type_id", 3);
         bodyrequest.put("item_category_id", 1);
-        bodyrequest.put("start_date", "13/06/2023");
-        bodyrequest.put("end_date", "23/06/2023");
+        bodyrequest.put("start_date", "25/06/2023");
+        bodyrequest.put("end_date", "26/06/2023");
 
         if (method.equals("POST")) {
             actor.attemptsTo(Post.to(path).with(request -> request.header("Authorization", "Bearer " + user.getAuth()).body(bodyrequest)));
         } else {
             throw new IllegalStateException("Unknown method");
+        }
+    }
+
+    @And("{actor} get {string} from response and store to {string} data")
+    public void adminGetFromResponseAndStoreToData(Actor actor, String path, String entity) {
+        Response response = SerenityRest.lastResponse();
+
+        if(entity.equals("warehouse")){
+            id.setIdWarehouse(Integer.toString(response.path(path)));
+        } else if (entity.equals("staff")) {
+            id.setIdStaff(Integer.toString(response.path(path)));
         }
     }
 }

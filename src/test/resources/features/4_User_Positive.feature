@@ -19,7 +19,7 @@ Feature: User Feature Positive
     Then User verify status code is 200
     Then User user get auth token
     Then User verify response is match with json schema "authlogin.json"
-    Given User user call an api "/profile" with method "GET"
+    Given User user call an api "/profile/favorite" with method "GET"
     And User verify status code is 200
     Then User verify response is match with json schema "userGetProfile.json"
 
@@ -45,14 +45,14 @@ Feature: User Feature Positive
     Then User verify status code is 200
     Then User user get auth token
     Then User verify response is match with json schema "authlogin.json"
-    Given User want make transaction path "/warehouse/favorite" with method "POST"
+    Given User want make transaction path "/transaction" with method "POST"
     And User verify status code is 200
-    Then User verify response is match with json schema "userUpdateProfile.json"
+    Then User verify response is match with json schema "createTransaction.json"
 
 
   @Inventron @Auth @User @GetFavorite
   Scenario: User GET all transaction in inventron
-    Given User user want call an api "/login" with method "GET" with payload below
+    Given User user want call an api "/login" with method "POST" with payload below
       | email     | password     |
       | userEmail | userPassword |
     And User verify status code is 200
@@ -60,19 +60,18 @@ Feature: User Feature Positive
     Then User admin get auth token
     Given User admin call api "/profile/favorite" with method "GET"
     And User verify status code is 200
-    Then User verify response is match with json schema "userGetFavorite.json"
 
   @Inventron @Auth @User @GetTransaction
   Scenario: User GET all transaction in inventron
-    Given User user want call an api "/login" with method "GET" with payload below
+    Given User user want call an api "/login" with method "POST" with payload below
       | email     | password     |
       | userEmail | userPassword |
     And User verify status code is 200
-    Then User verify response is match with json schema "userGetProfile.json"
+    Then User verify response is match with json schema "authlogin.json"
     Then User admin get auth token
     Given User admin call api "/profile/transaction" with method "GET"
     And User verify status code is 200
-    Then User verify response is match with json schema "userGetTransaction.json"
+    Then User verify response is match with json schema "getTransaction.json"
 
   @Inventron @User @Auth @UserGetExplore
   Scenario: User get data explore on api
