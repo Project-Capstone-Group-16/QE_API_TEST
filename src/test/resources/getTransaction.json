@@ -1,0 +1,78 @@
+{
+  "message": "success get transaction by user id",
+  "data": [
+    {
+      "ID": 9,
+      "CreatedAt": "2023-06-21T01:02:12.653+07:00",
+      "UpdatedAt": "2023-06-21T01:02:14.8+07:00",
+      "DeletedAt": null,
+      "order_id": "TRX-b5c4b91f-ea37-41f3-8ae5-ffecd1f904c0",
+      "user_id": 5,
+      "User": {
+        "ID": 5,
+        "CreatedAt": "2023-06-14T08:19:06.774+07:00",
+        "UpdatedAt": "2023-06-14T15:38:41.657+07:00",
+        "DeletedAt": null,
+        "email": "2006147@itg.ac.id",
+        "password": "$2a$10$.mUdOw8F1DUv0SXL6UL8ROv00cAsUQxxumNsqz8EMkXaC9VchYuTm",
+        "first_name": "Qomar",
+        "last_name": "Saragih",
+        "birth_date": "2002-04-25T00:00:00+07:00",
+        "gender": "WANITA",
+        "phone_number": "085591717699",
+        "address": "Apt. 426 Jl. Diponegoro No. 88, Aceh Selatan, WV 88416",
+        "image_url": "https://s3.amazonaws.com/uifaces/faces/twitter/motionthinks/128.jpg",
+        "role": "USER"
+      },
+      "locker_id": 271,
+      "Locker": {
+        "ID": 271,
+        "CreatedAt": "2023-06-16T16:24:22.849+07:00",
+        "UpdatedAt": "2023-06-16T16:24:22.849+07:00",
+        "DeletedAt": null,
+        "warehouse_id": 8,
+        "locker_type_id": 3,
+        "name": "L31",
+        "locker_number": 31,
+        "availability": "Available",
+        "Warehouse": {
+          "ID": 8,
+          "CreatedAt": "2023-06-16T16:24:22.604+07:00",
+          "UpdatedAt": "2023-06-21T23:24:53.884+07:00",
+          "DeletedAt": null,
+          "name": "Inventron jawa utara",
+          "city": "Jawa",
+          "address": "Jl.dulu aja dah",
+          "capacity": 40,
+          "status": "Available",
+          "favorites": 0,
+          "description": "jawa adalah inventron yang ada di indonesia",
+          "image_url": "https://res.cloudinary.com/ddf2m61gv/image/upload/v1686932622/Inventron/0803c44f-9e20-4aac-9258-7e2ec3672ec2.png",
+          "Locker": null
+        },
+        "LockerType": {
+          "ID": 3,
+          "CreatedAt": "2023-06-14T06:36:30.747+07:00",
+          "UpdatedAt": "2023-06-14T06:36:30.747+07:00",
+          "DeletedAt": null,
+          "name": "Large",
+          "price": 30000
+        }
+      },
+      "item_category_id": 1,
+      "ItemCategory": {
+        "id": 1,
+        "name": "Tas Ransel",
+        "image_url": "https://res.cloudinary.com/ddf2m61gv/image/upload/v1686493003/Inventron/Tas%20Ransel.png.png"
+      },
+      "amount": 210000,
+      "start_date": "2023-06-21T07:00:00+07:00",
+      "end_date": "2023-06-28T07:00:00+07:00",
+      "status": "Waiting for Payment",
+      "payment_method": "",
+      "payment_date": null,
+      "payment_status": "Unpaid",
+      "payment_url": "https://app.sandbox.midtrans.com/snap/v3/redirection/f96351da-e271-4063-9aec-e21192e38fb1"
+    }
+  ]
+}
