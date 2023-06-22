@@ -337,6 +337,7 @@ public class APIStepDefinitions {
 
     @Given("{actor} want GET all small locker {string} with method {string}")
     public void UserWantGETalllockersmall(Actor actor, String path, String method) {
+        actor.whoCan(CallAnApi.at(baseURL));
         actor.attemptsTo(Get.resource(path).with(request -> request.header("Authorization", "Bearer " + admin.getAuth())));
         JSONObject bodyrequest = new JSONObject();
     }
