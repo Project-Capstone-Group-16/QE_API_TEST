@@ -347,6 +347,20 @@ public class APIStepDefinitions {
             id.setIdStaff(Integer.toString(response.path(path)));
         }
     }
+
+    @Given("{actor} call api {string} method {string}")
+    public void adminCallApiMethod(Actor actor, String path, String method) {
+        actor.whoCan(CallAnApi.at(baseURL));
+
+        File file = new File(System.getProperty("user.dir") + "/src/test/resources/img/warehouse.jpg");
+
+        if (method.equals("POST")) {
+            actor.attemptsTo(Post.to(path).with(request -> request.contentType("multipart/form-data").multiPart("image_url", file, "image/jpeg")));
+        } else {
+            throw new IllegalStateException("Unknown method");
+        }
+
+    }
 }
 
 
