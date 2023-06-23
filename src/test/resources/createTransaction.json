@@ -1,0 +1,300 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "message": {
+      "type": "string"
+    },
+    "data": {
+      "type": "object",
+      "properties": {
+        "ID": {
+          "type": "integer"
+        },
+        "CreatedAt": {
+          "type": "string"
+        },
+        "UpdatedAt": {
+          "type": "string"
+        },
+        "DeletedAt": {
+          "type": "null"
+        },
+        "order_id": {
+          "type": "string"
+        },
+        "user_id": {
+          "type": "integer"
+        },
+        "User": {
+          "type": "object",
+          "properties": {
+            "ID": {
+              "type": "integer"
+            },
+            "CreatedAt": {
+              "type": "string"
+            },
+            "UpdatedAt": {
+              "type": "string"
+            },
+            "DeletedAt": {
+              "type": "null"
+            },
+            "email": {
+              "type": "string"
+            },
+            "password": {
+              "type": "string"
+            },
+            "first_name": {
+              "type": "string"
+            },
+            "last_name": {
+              "type": "string"
+            },
+            "birth_date": {
+              "type": "string"
+            },
+            "gender": {
+              "type": "string"
+            },
+            "phone_number": {
+              "type": "string"
+            },
+            "address": {
+              "type": "string"
+            },
+            "image_url": {
+              "type": "string"
+            },
+            "role": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "ID",
+            "CreatedAt",
+            "UpdatedAt",
+            "DeletedAt",
+            "email",
+            "password",
+            "first_name",
+            "last_name",
+            "birth_date",
+            "gender",
+            "phone_number",
+            "address",
+            "image_url",
+            "role"
+          ]
+        },
+        "locker_id": {
+          "type": "integer"
+        },
+        "Locker": {
+          "type": "object",
+          "properties": {
+            "ID": {
+              "type": "integer"
+            },
+            "CreatedAt": {
+              "type": "string"
+            },
+            "UpdatedAt": {
+              "type": "string"
+            },
+            "DeletedAt": {
+              "type": "null"
+            },
+            "warehouse_id": {
+              "type": "integer"
+            },
+            "locker_type_id": {
+              "type": "integer"
+            },
+            "name": {
+              "type": "string"
+            },
+            "locker_number": {
+              "type": "integer"
+            },
+            "availability": {
+              "type": "string"
+            },
+            "Warehouse": {
+              "type": "object",
+              "properties": {
+                "ID": {
+                  "type": "integer"
+                },
+                "CreatedAt": {
+                  "type": "string"
+                },
+                "UpdatedAt": {
+                  "type": "string"
+                },
+                "DeletedAt": {
+                  "type": "null"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "city": {
+                  "type": "string"
+                },
+                "address": {
+                  "type": "string"
+                },
+                "capacity": {
+                  "type": "integer"
+                },
+                "status": {
+                  "type": "string"
+                },
+                "favorites": {
+                  "type": "integer"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "image_url": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "ID",
+                "CreatedAt",
+                "UpdatedAt",
+                "DeletedAt",
+                "name",
+                "city",
+                "address",
+                "capacity",
+                "status",
+                "favorites",
+                "description",
+                "image_url"
+              ]
+            },
+            "LockerType": {
+              "type": "object",
+              "properties": {
+                "ID": {
+                  "type": "integer"
+                },
+                "CreatedAt": {
+                  "type": "string"
+                },
+                "UpdatedAt": {
+                  "type": "string"
+                },
+                "DeletedAt": {
+                  "type": "null"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "price": {
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "ID",
+                "CreatedAt",
+                "UpdatedAt",
+                "DeletedAt",
+                "name",
+                "price"
+              ]
+            }
+          },
+          "required": [
+            "ID",
+            "CreatedAt",
+            "UpdatedAt",
+            "DeletedAt",
+            "warehouse_id",
+            "locker_type_id",
+            "name",
+            "locker_number",
+            "availability",
+            "Warehouse",
+            "LockerType"
+          ]
+        },
+        "item_category_id": {
+          "type": "integer"
+        },
+        "ItemCategory": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer"
+            },
+            "name": {
+              "type": "string"
+            },
+            "image_url": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "id",
+            "name",
+            "image_url"
+          ]
+        },
+        "amount": {
+          "type": "integer"
+        },
+        "start_date": {
+          "type": "string"
+        },
+        "end_date": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "payment_method": {
+          "type": "string"
+        },
+        "payment_date": {
+          "type": "null"
+        },
+        "payment_status": {
+          "type": "string"
+        },
+        "payment_url": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "ID",
+        "CreatedAt",
+        "UpdatedAt",
+        "DeletedAt",
+        "order_id",
+        "user_id",
+        "User",
+        "locker_id",
+        "Locker",
+        "item_category_id",
+        "ItemCategory",
+        "amount",
+        "start_date",
+        "end_date",
+        "status",
+        "payment_method",
+        "payment_date",
+        "payment_status",
+        "payment_url"
+      ]
+    }
+  },
+  "required": [
+    "message",
+    "data"
+  ]
+}
