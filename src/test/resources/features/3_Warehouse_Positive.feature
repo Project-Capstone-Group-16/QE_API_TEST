@@ -13,7 +13,7 @@ Feature: Warehouse Feature Positive
     Then User verify response is match with json schema "getAllWarehouse.json"
 
   @Inventron @Warehouse @Auth @GetAllWarehouseByStatus
-  Scenario: User Get All Warehouse
+  Scenario: User Get All Warehouse by status
     Given User user want call an api "/login" with method "POST" with payload below
       | email     | password     |
       | userEmail | userPassword |
@@ -46,4 +46,4 @@ Feature: Warehouse Feature Positive
     Then User verify response is match with json schema "authlogin.json"
     Then User user call an api "/warehouse/recomended" with method "GET"
     And User verify status code is 200
-    Then User verify response is match with json schema "getAllWarehouse.json"
+    Then User verify response is match with json schema "getRecomendedWarehouse.json"

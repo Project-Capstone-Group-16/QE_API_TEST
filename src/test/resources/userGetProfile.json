@@ -33,7 +33,7 @@
           "type": "string"
         },
         "birth_date": {
-          "type": "null"
+          "type": "string"
         },
         "gender": {
           "type": "string"

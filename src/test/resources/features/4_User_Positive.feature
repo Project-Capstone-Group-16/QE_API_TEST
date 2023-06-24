@@ -19,7 +19,7 @@ Feature: User Feature Positive
     Then User verify status code is 200
     Then User user get auth token
     Then User verify response is match with json schema "authlogin.json"
-    Given User user call an api "/profile/favorite" with method "GET"
+    Given User user call an api "/profile" with method "GET"
     And User verify status code is 200
     Then User verify response is match with json schema "userGetProfile.json"
 

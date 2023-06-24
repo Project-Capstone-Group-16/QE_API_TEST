@@ -13,41 +13,45 @@
           "ID": {
             "type": "integer"
           },
-          "email": {
+          "name": {
             "type": "string"
           },
-          "fullname": {
-            "type": "string"
-          },
-          "birth_date": {
-            "type": "string"
-          },
-          "phone_number": {
+          "city": {
             "type": "string"
           },
           "address": {
             "type": "string"
           },
-          "gender": {
+          "status": {
             "type": "string"
           },
-          "transaction_histroies": {
+          "capacity": {
             "type": "integer"
+          },
+          "favorite": {
+            "type": "integer"
+          },
+          "description": {
+            "type": "string"
           },
           "image_url": {
             "type": "string"
+          },
+          "Locker": {
+            "type": "null"
           }
         },
         "required": [
           "ID",
-          "email",
-          "fullname",
-          "birth_date",
-          "phone_number",
+          "name",
+          "city",
           "address",
-          "gender",
-          "transaction_histroies",
-          "image_url"
+          "status",
+          "capacity",
+          "favorite",
+          "description",
+          "image_url",
+          "Locker"
         ]
       }
     }

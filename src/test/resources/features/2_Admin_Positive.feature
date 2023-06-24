@@ -115,7 +115,7 @@ Feature: Admin Feature Positive
 
 
   @Inventron @Auth @Admin @AdminAuth @GetALlStaff
-  Scenario: Admin Get All User in Inventron
+  Scenario: Admin Get All Staff in Inventron
     Given Admin admin want call an api "/login/admin" with method "POST" with payload below
       | email      | password      |
       | adminEmail | adminPassword |
