@@ -1,0 +1,76 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "message": {
+      "type": "string"
+    },
+    "data": {
+      "type": "object",
+      "properties": {
+        "ID": {
+          "type": "integer"
+        },
+        "CreatedAt": {
+          "type": "string"
+        },
+        "UpdatedAt": {
+          "type": "string"
+        },
+        "DeletedAt": {
+          "type": "null"
+        },
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "first_name": {
+          "type": "string"
+        },
+        "last_name": {
+          "type": "string"
+        },
+        "birth_date": {
+          "type": "string"
+        },
+        "gender": {
+          "type": "string"
+        },
+        "phone_number": {
+          "type": "string"
+        },
+        "address": {
+          "type": "string"
+        },
+        "image_url": {
+          "type": "string"
+        },
+        "role": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "ID",
+        "CreatedAt",
+        "UpdatedAt",
+        "DeletedAt",
+        "email",
+        "password",
+        "first_name",
+        "last_name",
+        "birth_date",
+        "gender",
+        "phone_number",
+        "address",
+        "image_url",
+        "role"
+      ]
+    }
+  },
+  "required": [
+    "message",
+    "data"
+  ]
+}

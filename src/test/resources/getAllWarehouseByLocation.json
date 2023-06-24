@@ -1,0 +1,55 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "message": {
+      "type": "string"
+    },
+    "data": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "province": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "capacity": {
+            "type": "integer"
+          },
+          "favorite": {
+            "type": "integer"
+          },
+          "image_url": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "city",
+          "province",
+          "status",
+          "capacity",
+          "favorite",
+          "image_url"
+        ]
+      }
+    }
+  },
+  "required": [
+    "message",
+    "data"
+  ]
+}

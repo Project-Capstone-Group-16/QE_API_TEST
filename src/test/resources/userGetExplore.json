@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "message": {
+      "type": "string"
+    },
+    "data": {
+      "type": "object",
+      "properties": {
+        "active_order": {
+          "type": "integer"
+        },
+        "count_transaction": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "active_order",
+        "count_transaction"
+      ]
+    }
+  },
+  "required": [
+    "message",
+    "data"
+  ]
+}
