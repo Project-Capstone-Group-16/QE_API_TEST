@@ -2,7 +2,7 @@ package starter.data;
 
 public class Admin {
 
-    String adminEmail = "admin1234@gmail.com";
+    String adminEmail = "admin@gmail.com";
     String adminPassword = "admin123";
     String auth;
     String location;
