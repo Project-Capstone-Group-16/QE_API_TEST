@@ -38,6 +38,8 @@ public class APIStepDefinitions {
     public void callApiAsUserPayload(Actor actor, String path, String method, DataTable table) {
         actor.whoCan(CallAnApi.at(baseURL));
 
+        File file = new File(System.getProperty("user.dir") + "/src/test/resources/img/warehouse.jpg");
+
         // Create request body json instance
         JSONObject bodyRequest = new JSONObject();
 
@@ -85,8 +87,7 @@ public class APIStepDefinitions {
                     bodyRequest.put(key, randomAddress);
                 }
                 case "imageUrl" -> {
-                    String imageUrl = faker.internet().avatar();
-                    bodyRequest.put(key, imageUrl);
+                    bodyRequest.put(key, file);
                 }
                 case "favoriteWarehouse" ->{
                     int favoriteWarehouse = 1;
@@ -130,6 +131,9 @@ public class APIStepDefinitions {
     @Given("{actor} admin want call an api {string} with method {string} with payload below")
     public void callApiAsAdminPayload(Actor actor, String path, String method, DataTable table) {
         actor.whoCan(CallAnApi.at(baseURL));
+
+        File file = new File(System.getProperty("user.dir") + "/src/test/resources/img/warehouse.jpg");
+
 
         // Create request body json instance
         JSONObject bodyRequest = new JSONObject();
@@ -193,7 +197,7 @@ public class APIStepDefinitions {
 
                 case "posision" -> bodyRequest.put(key, jabatan.forPosision());
                 case "gender" -> bodyRequest.put(key, jabatan.forGender());
-                case "imageUrl" -> bodyRequest.put(key, faker.internet().avatar());
+                case "imageUrl" -> bodyRequest.put(key, file);
                 case "adminEmail" -> bodyRequest.put(key, admin.getAdminEmail());
                 case "adminPassword" -> bodyRequest.put(key, admin.getAdminPassword());
                 default -> bodyRequest.put(key, valueList.get(key));
@@ -234,16 +238,6 @@ public class APIStepDefinitions {
     public void callApiAsAdmin(Actor actor, String path, String method) {
         actor.whoCan(CallAnApi.at(baseURL));
 
-//        // Create request body json instance
-//        JSONObject bodyRequest = new JSONObject();
-//
-//        // Get headers
-//        List<List<String>> rowsList = table.asLists(String.class);
-//        List<String> headerList = rowsList.get(0);
-//
-//        // Get values
-//        List<Map<String, String>> rowsMap = table.asMaps(String.class, String.class);
-//        Map<String, String> valueList = rowsMap.get(0);
 
         switch (method) {
             case "GET":
@@ -363,29 +357,3 @@ public class APIStepDefinitions {
     }
 }
 
-
-//@Given("{actor} admin call api {string} with method {string}")
-//    public void userCallApiWithMethod(Actor actor, String path, String method) {
-//        actor.whoCan(CallAnApi.at(baseURL));
-//
-//        Faker faker = new Faker(new Locale("in-ID"));
-//        String location = faker.address().city();
-//        String nameWarehouse = "Inventron " + location;
-//
-//        File file = new File(System.getProperty("user.dir") + "/src/test/resources/img/warehouse.jpg");
-//
-//        switch (method) {
-//            case "GET" ->
-//                    actor.attemptsTo(Get.resource(path).with(request -> request.header("Authorization", "Bearer " + admin.getAuth())));
-//
-//            case "POST" -> actor.attemptsTo(Post.to(path).with(request -> request.contentType("multipart/form-data").header("Authorization", "Bearer " + admin.getAuth())
-//                    .multiPart("name", nameWarehouse).multiPart("location", location).multiPart("warehouse_image", file,"image/jpeg")));
-//
-//            case "PUT" -> actor.attemptsTo(Put.to(path).with(request -> request.contentType("multipart/form-data").header("Authorization", "Bearer " + admin.getAuth())
-//                    .multiPart("name", nameWarehouse).multiPart("location", location).multiPart("status", "Not Available").multiPart("warehouse_image", file,"image/jpeg")));
-//
-//            case "DELETE" -> actor.attemptsTo(Delete.from(path).with(request -> request.header("Authorization", "Bearer " + admin.getAuth())));
-//
-//            default -> throw new IllegalStateException("Unknown method");
-//        }
-//    }
